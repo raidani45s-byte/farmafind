@@ -17,6 +17,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col">
 
+<!-- HEADER -->
 <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
@@ -72,10 +73,10 @@
               Plataforma Abierta e Independiente · El Salvador
             </span>
             <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black tracking-tight leading-tight">
-              Encuentra Regentes Farmacéuticos y Consultores Acreditados.
+              Encuentra Regentes Farmacéuticos y Consultores Especializados.
             </h1>
             <p class="text-base sm:text-lg text-emerald-100 max-w-2xl font-normal leading-relaxed">
-              Conectamos gratuitamente a Químicos Farmacéuticos (con autorización JVPF) con droguerías, farmacias, laboratorios y establecimientos de salud en todo el país.
+              Conectamos gratuitamente a Químicos Farmacéuticos con droguerías, farmacias, laboratorios y establecimientos de salud en todo el país.
             </p>
 
             <!-- Search Bar -->
@@ -101,9 +102,9 @@
             </div>
             
             <div class="flex flex-wrap items-center gap-6 text-xs text-emerald-100 font-medium pt-1">
-              <span class="flex items-center gap-1.5">✓ Acreditación JVPF</span>
+              <span class="flex items-center gap-1.5">✓ Contacto Directo WhatsApp</span>
               <span class="flex items-center gap-1.5">✓ Sin Cobro de Comisiones</span>
-              <span class="flex items-center gap-1.5">✓ Contacto Protegido Directo</span>
+              <span class="flex items-center gap-1.5">✓ Protección Anti-Scraping</span>
             </div>
           </div>
 
@@ -114,20 +115,19 @@
                 <h3 class="font-bold text-lg">Regentes & Consultores Destacados</h3>
                 <p class="text-xs text-emerald-200">Perfiles disponibles para contratación</p>
               </div>
-              <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 border border-emerald-400/30">JVPF AL DÍA</span>
+              <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 border border-emerald-400/30">DISPONIBLE</span>
             </div>
 
             <div class="space-y-4">
-              <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 cursor-pointer" onclick="openProfileModal('Licda. Sofía Rivas', 'Química Farmacéutica - Regente', 'San Salvador', '12 años', ['Regencia Droguería', 'Registros Sanitarios'], 'JVPF #4820. Experiencia comprobada en regencias de laboratorios y gestiones de registros sanitarios de medicamentos y cosméticos.')">
+              <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 cursor-pointer" onclick="openProfileModal('Licda. Sofía Rivas', 'Química Farmacéutica - Regente', 'San Salvador', '12 años', ['Regencia Droguería', 'Registros Sanitarios'], 'Experiencia comprobada en regencias de laboratorios y gestiones de registros sanitarios de medicamentos y cosméticos ante las autoridades sanitarias.')">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-white font-black flex items-center justify-center text-lg shadow-md">SR</div>
                 <div class="flex-grow">
                   <div class="flex items-center gap-2">
                     <h4 class="font-bold text-sm">Licda. Sofía Rivas</h4>
-                    <span class="text-xs text-emerald-300 font-extrabold">✓ Verificado</span>
                   </div>
                   <p class="text-xs text-emerald-200">Regente Farmacéutico · San Salvador</p>
                 </div>
-                <span class="text-xs font-bold bg-emerald-400/30 text-emerald-200 border border-emerald-300/30 px-2.5 py-1 rounded-lg">JVPF #4820</span>
+                <span class="text-xs font-bold bg-emerald-400/30 text-emerald-200 border border-emerald-300/30 px-2.5 py-1 rounded-lg">12 años exp.</span>
               </div>
 
               <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 cursor-pointer" onclick="openProfileModal('Lic. Roberto Alemán', 'Especialista en Aseguramiento de Calidad', 'La Libertad', '9 años', ['Auditorías BPM', 'Microbiología'], 'Experiencia en industria de fabricación de inyectables y comprimidos. Auditor líder en Buenas Prácticas de Manufactura.')">
@@ -135,11 +135,10 @@
                 <div class="flex-grow">
                   <div class="flex items-center gap-2">
                     <h4 class="font-bold text-sm">Lic. Roberto Alemán</h4>
-                    <span class="text-xs text-emerald-300 font-extrabold">✓ Verificado</span>
                   </div>
                   <p class="text-xs text-emerald-200">Aseguramiento Calidad (QA) · La Libertad</p>
                 </div>
-                <span class="text-xs font-bold bg-emerald-400/30 text-emerald-200 border border-emerald-300/30 px-2.5 py-1 rounded-lg">JVPF #3910</span>
+                <span class="text-xs font-bold bg-emerald-400/30 text-emerald-200 border border-emerald-300/30 px-2.5 py-1 rounded-lg">9 años exp.</span>
               </div>
             </div>
 
@@ -194,11 +193,21 @@
     <!-- Professional Directory List -->
     <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
+      <!-- Disclaimer Banner for Employers -->
+      <div class="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900">
+        <div class="flex items-start gap-2.5">
+          <span class="text-base">ℹ️</span>
+          <p>
+            <strong>Nota para Empresas y Contratantes:</strong> FARMAFIND opera como un directorio informativo de libre acceso. Corresponde exclusivamente al establecimiento o empresa contratante corroborar las credenciales y atestados legales ante las autoridades correspondientes (JVPF / DNM / MinSal).
+          </p>
+        </div>
+      </div>
+
       <!-- Filter Bar -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
         <div>
-          <h2 class="text-xl font-bold text-slate-900">Directorio de Profesionales Acreditados</h2>
-          <p class="text-xs text-slate-500">Mostrando Químicos Farmacéuticos registrados con autorización JVPF.</p>
+          <h2 class="text-xl font-bold text-slate-900">Directorio de Profesionales</h2>
+          <p class="text-xs text-slate-500">Mostrando Químicos Farmacéuticos y especialistas disponibles.</p>
         </div>
         
         <div class="flex flex-wrap gap-3">
@@ -232,12 +241,11 @@
                 <div>
                   <h3 class="font-bold text-slate-900 text-lg flex items-center gap-1.5">
                     Licda. Sofía Rivas
-                    <span class="text-emerald-500" title="Acreditado JVPF">✓</span>
                   </h3>
-                  <p class="text-xs font-semibold text-emerald-600">Química Farmacéutica · JVPF #4820</p>
+                  <p class="text-xs font-semibold text-emerald-600">Química Farmacéutica</p>
                 </div>
               </div>
-              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded-md">VERIFICADO</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded-md">DISPONIBLE</span>
             </div>
 
             <p class="text-xs text-slate-600 mb-3 line-clamp-2">Regencia de droguerías, elaboración de expedientes de registros sanitarios y trámites regulatorios de medicamentos y cosméticos.</p>
@@ -254,7 +262,7 @@
           </div>
 
           <div class="pt-4 border-t border-slate-100 flex gap-2">
-            <button onclick="openProfileModal('Licda. Sofía Rivas', 'Química Farmacéutica - Regente', 'San Salvador', '12 años', ['Regencia Droguería', 'Registros Sanitarios'], 'JVPF #4820. Licenciada graduada de la UES con amplia trayectoria en regencias totales/parciales e inscripción de productos cosméticos y medicamentos.')"
+            <button onclick="openProfileModal('Licda. Sofía Rivas', 'Química Farmacéutica', 'San Salvador', '12 años', ['Regencia Droguería', 'Registros Sanitarios'], 'Licenciada graduada con amplia trayectoria en regencias totales/parciales e inscripción de productos cosméticos y medicamentos.')"
                     class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
               Ver Perfil Completo
             </button>
@@ -271,12 +279,11 @@
                 <div>
                   <h3 class="font-bold text-slate-900 text-lg flex items-center gap-1.5">
                     Lic. Roberto Alemán
-                    <span class="text-teal-500" title="Acreditado JVPF">✓</span>
                   </h3>
-                  <p class="text-xs font-semibold text-teal-600">Especialista QA / BPM · JVPF #3910</p>
+                  <p class="text-xs font-semibold text-teal-600">Especialista QA / BPM</p>
                 </div>
               </div>
-              <span class="bg-teal-100 text-teal-800 text-[10px] font-bold px-2 py-1 rounded-md">VERIFICADO</span>
+              <span class="bg-teal-100 text-teal-800 text-[10px] font-bold px-2 py-1 rounded-md">DISPONIBLE</span>
             </div>
 
             <p class="text-xs text-slate-600 mb-3 line-clamp-2">Auditorías de Buenas Prácticas de Manufactura, validación de sistemas críticos y control microbiológico en plantas farmacéuticas.</p>
@@ -293,7 +300,7 @@
           </div>
 
           <div class="pt-4 border-t border-slate-100 flex gap-2">
-            <button onclick="openProfileModal('Lic. Roberto Alemán', 'Especialista QA / BPM', 'La Libertad', '9 años', ['Auditorías BPM', 'Microbiología'], 'JVPF #3910. Especialista en desarrollo e implementación de sistemas de calidad bajo normas internacionales.')"
+            <button onclick="openProfileModal('Lic. Roberto Alemán', 'Especialista QA / BPM', 'La Libertad', '9 años', ['Auditorías BPM', 'Microbiología'], 'Especialista en desarrollo e implementación de sistemas de calidad bajo normas internacionales.')"
                     class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
               Ver Perfil Completo
             </button>
@@ -309,7 +316,7 @@
                 <div class="w-14 h-14 rounded-2xl bg-cyan-600 text-white font-black text-xl flex items-center justify-center shadow-md">CM</div>
                 <div>
                   <h3 class="font-bold text-slate-900 text-lg">Licda. Carla Méndez</h3>
-                  <p class="text-xs font-semibold text-cyan-700">Farmacéutica Clínica · JVPF #6102</p>
+                  <p class="text-xs font-semibold text-cyan-700">Farmacéutica Clínica</p>
                 </div>
               </div>
               <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md">REGISTRADO</span>
@@ -329,7 +336,7 @@
           </div>
 
           <div class="pt-4 border-t border-slate-100 flex gap-2">
-            <button onclick="openProfileModal('Licda. Carla Méndez', 'Farmacéutica Clínica', 'Santa Ana', '4 años', ['Farmacia Asistencial', 'Medicamentos Controlados'], 'JVPF #6102. Química Farmacéutica enfocada en manejo de estupefacientes y regencias asistenciales.')"
+            <button onclick="openProfileModal('Licda. Carla Méndez', 'Farmacéutica Clínica', 'Santa Ana', '4 años', ['Farmacia Asistencial', 'Medicamentos Controlados'], 'Química Farmacéutica enfocada en manejo de estupefacientes y regencias asistenciales.')"
                     class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
               Ver Perfil Completo
             </button>
@@ -358,7 +365,7 @@
               OPORTUNIDADES Y REGENCIAS LIBRES
             </span>
             <h1 class="text-3xl font-black">Bolsa de Vacantes y Regencias Farmacéuticas</h1>
-            <p class="text-slate-400 text-sm mt-1">Droguerías, laboratorios y farmacias buscan regentes autorizados por la JVPF.</p>
+            <p class="text-slate-400 text-sm mt-1">Droguerías, laboratorios y farmacias buscan regentes autorizados.</p>
           </div>
           <button onclick="openModal('jobModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold py-3 px-6 rounded-xl shadow-lg shadow-emerald-600/30 transition-all self-start md:self-auto">
             + Publicar Vacante / Regencia (Gratis)
@@ -381,10 +388,10 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Regente Farmacéutico Titular - Cadena de Farmacias</h3>
             <p class="text-xs text-slate-600 font-medium">Farmacias del Centro S.A. de C.V. · San Salvador</p>
-            <p class="text-sm text-slate-500 max-w-3xl">Se busca profesional graduado con sello JVPF vigente para regencia de sucursal central y supervisión de estupefacientes.</p>
+            <p class="text-sm text-slate-500 max-w-3xl">Se busca profesional graduado para regencia de sucursal central y supervisión de estupefacientes.</p>
             <div class="flex flex-wrap gap-2 pt-2">
               <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg">Regencia Titular</span>
-              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg">Sello JVPF</span>
+              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg">Estupefacientes</span>
               <span class="text-xs font-bold text-emerald-700 self-center">Honorarios: Según regulación y experiencia</span>
             </div>
           </div>
@@ -432,7 +439,7 @@
           </span>
           <h1 class="text-3xl font-extrabold text-slate-900 mt-3">Impulsando el Talento Farmacéutico en El Salvador</h1>
           <p class="text-slate-600 text-sm mt-3 leading-relaxed">
-            FARMAFIND nace como una plataforma de libre acceso para conectar a Químicos Farmacéuticos acreditados con oportunidades laborales, regencias legales y servicios de consultoría regulatoria en el país.
+            FARMAFIND nace como una plataforma de libre acceso para conectar a Químicos Farmacéuticos con oportunidades laborales, regencias legales y servicios de consultoría regulatoria en el país.
           </p>
         </div>
 
@@ -445,14 +452,14 @@
 
           <div class="bg-white p-6 rounded-2xl border border-slate-200 custom-shadow text-center">
             <span class="text-3xl block mb-3">🛡️</span>
-            <h3 class="font-bold text-slate-900 text-base mb-1">Respeto al Ejercicio Legal</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Promovemos la acreditación previa ante la Junta de Vigilancia de la Profesión Farmacéutica (JVPF).</p>
+            <h3 class="font-bold text-slate-900 text-base mb-1">Responsabilidad Contractual</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Las empresas y profesionales acuerdan libremente sus vinculaciones. Corresponde al contratante validar atestados.</p>
           </div>
 
           <div class="bg-white p-6 rounded-2xl border border-slate-200 custom-shadow text-center">
             <span class="text-3xl block mb-3">🔒</span>
-            <h3 class="font-bold text-slate-900 text-base mb-1">Protección de Datos</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Tus datos de contacto están protegidos contra rastreadores automáticos y spam publicitario.</p>
+            <h3 class="font-bold text-slate-900 text-base mb-1">Protección de Datos (ARCO)</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Tus datos de contacto se comparten voluntariamente. Puedes solicitar su rectificación o borrado en cualquier momento.</p>
           </div>
         </div>
 
@@ -485,7 +492,7 @@
           <span>💊</span> FARMA<span class="text-emerald-500">FIND</span>
         </a>
         <p class="text-slate-400 max-w-sm leading-relaxed">
-          Plataforma abierta y libre para conectar Químicos Farmacéuticos acreditados con establecimientos de salud en El Salvador. Intermediación informativa orientada al gremio.
+          Plataforma abierta y libre para conectar Químicos Farmacéuticos con establecimientos de salud en El Salvador. Intermediación informativa orientada al gremio.
         </p>
       </div>
       <div>
@@ -507,7 +514,7 @@
     </div>
     
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
-      <p>© 2026 FARMAFIND. Proyecto comunitario listo para GitHub Pages.</p>
+      <p>© 2026 FARMAFIND. Directorio abierto e independiente.</p>
       <div class="flex gap-4">
         <span>El Salvador</span> • <span>Sector Farmacéutico</span>
       </div>
@@ -525,7 +532,7 @@
     <div class="mb-6">
       <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">REGISTRO GRATUITO</span>
       <h3 class="text-2xl font-bold text-slate-900 mt-1">Registro de Químico Farmacéutico</h3>
-      <p class="text-xs text-slate-500">Ingresa tus datos acreditados para figurar públicamente en el directorio.</p>
+      <p class="text-xs text-slate-500">Ingresa tus datos profesionales para figurar públicamente en el directorio.</p>
     </div>
 
     <form id="profForm" onsubmit="handleProfRegister(event)" class="space-y-4">
@@ -542,12 +549,8 @@
 
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Número de Autorización JVPF *</label>
-          <input required id="pJvpf" type="text" placeholder="Ej. JVPF #5120" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
-        </div>
-        <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Departamento / Ciudad *</label>
-          <select id="pCity" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700">
+          <select id="pCity" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 font-medium">
             <option>San Salvador</option>
             <option>Santa Ana</option>
             <option>San Miguel</option>
@@ -555,17 +558,15 @@
             <option>Sonsonate</option>
           </select>
         </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Años de Experiencia *</label>
           <input required id="pExp" type="number" min="0" placeholder="Ej. 6" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
         </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono / WhatsApp * <span class="text-[10px] font-semibold text-emerald-700 sm:inline block">(Público en directorio)</span></label>
-          <input required id="pPhone" type="text" placeholder="+503 7000-0000" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
-        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono / WhatsApp * <span class="text-[10px] font-semibold text-emerald-700 sm:inline block">(Público en directorio)</span></label>
+        <input required id="pPhone" type="text" placeholder="+503 7000-0000" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
       </div>
 
       <div>
@@ -583,7 +584,7 @@
         <label class="flex items-start gap-2 cursor-pointer text-xs text-slate-600">
           <input type="checkbox" id="legalConsent" required class="mt-0.5 rounded border-slate-300">
           <span>
-            Acepto los <a href="#terminos" onclick="showLegalModal('terms')" class="text-emerald-600 underline font-bold">Términos y Condiciones</a> y la <a href="#privacidad" onclick="showLegalModal('privacy')" class="text-emerald-600 underline font-bold">Política de Privacidad</a>. Declaro poseer acreditación legal vigente de la JVPF y autorizo la publicación de mi contacto profesional.
+            Acepto los <a href="#terminos" onclick="showLegalModal('terms')" class="text-emerald-600 underline font-bold">Términos y Condiciones</a> y la <a href="#privacidad" onclick="showLegalModal('privacy')" class="text-emerald-600 underline font-bold">Política de Privacidad</a>. Autorizo la publicación voluntaria de mi contacto profesional en el directorio.
           </span>
         </label>
       </div>
@@ -625,7 +626,7 @@
 
       <div>
         <label class="block text-xs font-bold text-slate-700 mb-1">Descripción del Requerimiento *</label>
-        <textarea required id="jDesc" rows="3" placeholder="Indicar si requiere regencia total o parcial, sello JVPF, gestiones de registros sanitarios..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs"></textarea>
+        <textarea required id="jDesc" rows="3" placeholder="Indicar tipo de regencia (total/parcial), horario, gestiones de registros sanitarios..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs"></textarea>
       </div>
 
       <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all shadow-lg">
@@ -635,7 +636,7 @@
   </div>
 </div>
 
-<!-- 3. Modal: Vista de Perfil Protegida Anti-Spam -->
+<!-- 3. Modal: Vista de Perfil Protegida WhatsApp -->
 <div id="profileViewModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
   <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl">
     <button onclick="closeModal('profileViewModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-800 text-2xl font-bold">×</button>
@@ -646,7 +647,7 @@
         <div class="flex items-center gap-2">
           <h3 id="pvName" class="text-2xl font-bold text-slate-900">Licda. Sofía Rivas</h3>
         </div>
-        <p id="pvRole" class="text-xs font-semibold text-emerald-600">Química Farmacéutica - Regente</p>
+        <p id="pvRole" class="text-xs font-semibold text-emerald-600">Química Farmacéutica</p>
         <p id="pvLocExp" class="text-xs text-slate-500 mt-1">📍 San Salvador · 12 años de experiencia</p>
       </div>
     </div>
@@ -658,7 +659,7 @@
       </div>
 
       <div>
-        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Especialidades & Acreditaciones</h4>
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Especialidades & Servicios</h4>
         <div id="pvTags" class="flex flex-wrap gap-2"></div>
       </div>
 
@@ -666,15 +667,15 @@
       <div class="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
         <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-            🔒 Contacto Protegido (Escudo Anti-Scraping)
+            🔒 Contacto Profesional Directo
           </span>
-          <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Protección Activa</span>
+          <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Protección Spam Activa</span>
         </div>
-        <p class="text-xs text-slate-500 mb-3">Haz clic en el botón para revelar el teléfono o WhatsApp del profesional.</p>
+        <p class="text-xs text-slate-500 mb-3">Haz clic en el botón para abrir un chat directo por WhatsApp con el profesional.</p>
         
         <div id="pvContactBox" class="text-center py-3 bg-white rounded-xl border border-dashed border-slate-300">
-          <button onclick="revealContact()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition-all">
-            👁️ Revelar Teléfono / WhatsApp Directo
+          <button onclick="revealContact()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-all shadow-sm">
+            💬 Contactar vía WhatsApp
           </button>
         </div>
       </div>
@@ -806,7 +807,6 @@
 
     const name = document.getElementById('pName').value;
     const lastName = document.getElementById('pLastName').value;
-    const jvpf = document.getElementById('pJvpf').value;
     const city = document.getElementById('pCity').value;
     const exp = document.getElementById('pExp').value;
     const phone = document.getElementById('pPhone').value;
@@ -814,23 +814,23 @@
     const desc = document.getElementById('pDesc').value;
 
     const initials = (name[0] + (lastName[0] || '')).toUpperCase();
-    const fullName = `Lic. ${name} ${lastName}`;
+    const fullName = `Licda. ${name} ${lastName}`;
 
     const cardHTML = `
       <article class="prof-card bg-white rounded-2xl p-6 border border-slate-200 custom-shadow hover:border-emerald-400 transition-all relative flex flex-col justify-between"
-               data-profession="Regente" data-city="${city}" data-experience="${exp}" data-search="${fullName.toLowerCase()} ${jvpf.toLowerCase()} ${city.toLowerCase()} ${tags.join(' ').toLowerCase()}">
+               data-profession="Regente" data-city="${city}" data-experience="${exp}" data-search="${fullName.toLowerCase()} ${city.toLowerCase()} ${tags.join(' ').toLowerCase()}">
         <div>
           <div class="flex items-start justify-between mb-4">
             <div class="flex items-center gap-3">
               <div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white font-black text-xl flex items-center justify-center shadow-md">${initials}</div>
               <div>
                 <h3 class="font-bold text-slate-900 text-lg">${fullName}</h3>
-                <p class="text-xs font-semibold text-emerald-600">Químico Farmacéutico · ${jvpf}</p>
+                <p class="text-xs font-semibold text-emerald-600">Química Farmacéutica</p>
               </div>
             </div>
-            <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md">REGISTRADO</span>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded-md">REGISTRADO</span>
           </div>
-          <p class="text-xs text-slate-600 mb-3 line-clamp-2">${desc || 'Profesional farmacéutico acreditado registrado en el directorio.'}</p>
+          <p class="text-xs text-slate-600 mb-3 line-clamp-2">${desc || 'Profesional farmacéutico registrado en el directorio.'}</p>
           <div class="space-y-1.5 mb-4 text-xs text-slate-500">
             <div class="flex items-center gap-2"><span>📍</span> <span>${city}, El Salvador</span></div>
             <div class="flex items-center gap-2"><span>🎓</span> <span>${exp} años de experiencia</span></div>
@@ -840,7 +840,7 @@
           </div>
         </div>
         <div class="pt-4 border-t border-slate-100">
-          <button onclick="openProfileModal('${fullName}', 'Químico Farmacéutico · ${jvpf}', '${city}', '${exp} años', ${JSON.stringify(tags)}, '${desc}', '${phone}')"
+          <button onclick="openProfileModal('${fullName}', 'Química Farmacéutica', '${city}', '${exp} años', ${JSON.stringify(tags)}, '${desc}', '${phone}')"
                   class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
             Ver Perfil Completo
           </button>
@@ -885,10 +885,10 @@
     alert('Oferta publicada en el tablón de empleo de FARMAFIND.');
   }
 
-  // Profile Modal & Contact Reveal
-  let currentActivePhone = "+503 7000-0000";
+  // Profile Modal & WhatsApp Direct Action
+  let currentActivePhone = "50370000000";
 
-  function openProfileModal(name, role, city, exp, tags, desc = '', phone = '+503 7000-0000') {
+  function openProfileModal(name, role, city, exp, tags, desc = '', phone = '50370000000') {
     document.getElementById('pvName').innerText = name;
     document.getElementById('pvRole').innerText = role;
     document.getElementById('pvLocExp').innerText = `📍 ${city} · ${exp} de experiencia`;
@@ -904,24 +904,18 @@
     });
 
     document.getElementById('pvContactBox').innerHTML = `
-      <button onclick="revealContact()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition-all">
-        👁️ Revelar Teléfono / WhatsApp Directo
+      <button onclick="revealContact('${name}')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 mx-auto">
+        💬 Contactar por WhatsApp
       </button>
     `;
 
     openModal('profileViewModal');
   }
 
-  function revealContact() {
-    document.getElementById('pvContactBox').innerHTML = `
-      <div class="space-y-2">
-        <p class="text-xs text-slate-500 font-medium">Contacto directo verificado:</p>
-        <p class="text-lg font-black text-emerald-600">${currentActivePhone}</p>
-        <a href="https://wa.me/${currentActivePhone.replace(/[^0-9]/g,'')}" target="_blank" class="inline-block px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm">
-          💬 Abrir en WhatsApp
-        </a>
-      </div>
-    `;
+  function revealContact(name = 'Profesional') {
+    const cleanPhone = currentActivePhone.replace(/[^0-9]/g, '');
+    const msg = encodeURIComponent(`Hola ${name}, encontré tu perfil en FARMAFIND y me gustaría consultar tu disponibilidad.`);
+    window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
   }
 
   function applyJob(jobTitle) {
@@ -939,9 +933,9 @@
         <h4 class="font-bold text-slate-800">1. Naturaleza de la Plataforma</h4>
         <p>FARMAFIND opera exclusivamente como un directorio interactivo de libre acceso e intermediación informativa pasiva entre profesionales farmacéuticos y establecimientos del sector salud en El Salvador.</p>
 
-        <h4 class="font-bold text-slate-800 mt-3">2. Exención de Verificación de Credenciales JVPF</h4>
+        <h4 class="font-bold text-slate-800 mt-3">2. Exención de Verificación de Credenciales (JVPF / DNM)</h4>
         <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 my-1">
-          <strong>DESLINDE DE RESPONSABILIDAD:</strong> FARMAFIND no verifica, certifica ni garantiza la autenticidad de las licencias ni el estado de autorización ante la Junta de Vigilancia de la Profesión Farmacéutica (JVPF), ni la idoneidad técnica de los usuarios registrados. Es responsabilidad estricta y exclusiva del establecimiento o empresa contratante corroborar las credenciales ante las autoridades competentes (JVPF / DNM / MinSal) previo a formalizar cualquier contratación o regencia.
+          <strong>DESLINDE DE RESPONSABILIDAD:</strong> FARMAFIND no verifica, certifica ni garantiza la autenticidad de licencias ante la Junta de Vigilancia de la Profesión Farmacéutica (JVPF) ni la idoneidad técnica de los usuarios. Corresponde exclusivamente a la empresa contratante corroborar atestados legales ante las entidades competentes previo a formalizar cualquier vínculo laboral o regencia.
         </div>
 
         <h4 class="font-bold text-slate-800 mt-3">3. Autonomía Contractual</h4>
@@ -951,7 +945,7 @@
       title.innerText = 'Política de Tratamiento y Protección de Datos';
       body.innerHTML = `
         <h4 class="font-bold text-slate-800">1. Datos Publicados Voluntariamente</h4>
-        <p>Al registrarse, el usuario autoriza de manera explícita la publicación de su nombre, especialidad, ciudad y número de teléfono/WhatsApp para ser contactado con fines de ofertas laborales y solicitudes de regencia.</p>
+        <p>Al registrarse, el usuario autoriza de manera explícita la publicación de su nombre, especialidad, ciudad y medio de contacto (WhatsApp) para ser contactado con fines de ofertas laborales y solicitudes de regencia.</p>
 
         <h4 class="font-bold text-slate-800 mt-3">2. Derechos ARCO (Baja y Modificación de Perfil)</h4>
         <p>El usuario podrá solicitar en cualquier momento la modificación, actualización o eliminación definitiva de su perfil y datos de contacto de nuestro directorio público.</p>
