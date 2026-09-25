@@ -41,7 +41,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
-  <!-- NAVBAR RESTAURADO -->
+  <!-- NAVBAR RESTAURADO EXACTO -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-2">
       <div class="flex items-center gap-3">
@@ -72,7 +72,7 @@
     </div>
   </header>
 
-  <!-- HERO RESTAURADO EXACTO -->
+  <!-- HERO EXACTO CON TARJETA FLOTANTE -->
   <section class="bg-emerald-hero text-white py-16 px-4 relative overflow-hidden">
     <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center">
       
@@ -172,6 +172,9 @@
         <h2 class="text-2xl font-black text-slate-900">Directorio Profesional Q.F.</h2>
         <p class="text-xs text-slate-500">Perfiles en tiempo real registrados desde la base de datos.</p>
       </div>
+      <div class="bg-emerald-50 text-emerald-800 text-xs font-semibold px-3 py-2 rounded-lg border border-emerald-200">
+        ℹ️ Verificación de atestados legales a cargo de la entidad contratante.
+      </div>
     </div>
 
     <!-- TARJETAS REGISTRADAS EN FIREBASE -->
@@ -180,13 +183,93 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer id="legal" class="bg-slate-900 text-slate-400 py-10 px-4 text-xs mt-auto">
-    <div class="max-w-7xl mx-auto text-center space-y-2">
-      <p class="font-bold text-white">FARMAFIND · El Salvador</p>
-      <p class="text-slate-500">Conectado a Google Firebase · La verificación de credenciales legales corresponde a la empresa contratante.</p>
+  <!-- BOLSA DE TRABAJO -->
+  <section id="empleos" class="bg-slate-100 py-12 px-4 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-8">
+        <h2 class="text-2xl font-black text-slate-900">Bolsa de Regencias y Vacantes</h2>
+        <p class="text-xs text-slate-500">Publicaciones activas de farmacias, droguerías y laboratorios en El Salvador.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">URGENTE</span>
+              <h3 class="font-bold text-slate-900 text-sm">Regente Farmacéutico Parcial (Droguería)</h3>
+            </div>
+            <p class="text-xs text-slate-500">Droguería Médica SV · 📍 San Salvador · Cobertura Parcial</p>
+          </div>
+          <button onclick="alert('Ponte en contacto con el empleador vía WhatsApp.')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
+            Postularme Gratis
+          </button>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- SECCIÓN MARCO LEGAL & SEGURIDAD DETALLADA -->
+  <section id="legal" class="bg-slate-900 text-slate-300 py-16 px-4 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto">
+      <div class="border-b border-slate-800 pb-8 mb-10">
+        <span class="text-emerald-400 font-extrabold text-xs tracking-wider uppercase">Garantías y Cumplimiento Normativo</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Marco Legal & Políticas de Privacidad</h2>
+        <p class="text-slate-400 text-xs mt-2 max-w-3xl">
+          FARMAFIND opera bajo los principios de libre ejercicio profesional, protección de datos y neutralidad como intermediario digital pasivo en El Salvador.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 text-xs leading-relaxed">
+        
+        <!-- ÍTEM 1: DESLINDE Y INTERMEDIACIÓN PASIVA -->
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+            ⚖️
+          </div>
+          <h3 class="font-bold text-white text-sm">1. Intermediación Pasiva y Deslinde Legal</h3>
+          <p class="text-slate-400">
+            FARMAFIND actúa exclusivamente como un medio publicitario y de difusión pasiva para facilitar el contacto entre profesionales independientes y establecimientos de salud en El Salvador.
+          </p>
+          <p class="text-slate-400">
+            La plataforma no constituye agencia de empleo, no participa en contrataciones ni asume responsabilidad por acuerdos comerciales, laborales o de regencia pactados entre las partes.
+          </p>
+        </div>
+
+        <!-- ÍTEM 2: VERIFICACIÓN DE CREDENCIALES -->
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+            📋
+          </div>
+          <h3 class="font-bold text-white text-sm">2. Verificación de Atestados y Licencias</h3>
+          <p class="text-slate-400">
+            Es responsabilidad estricta y exclusiva de la empresa contratante (farmacia, droguería o laboratorio) validar los atestados, títulos universitarios y autorizaciones vigentes ante los organismos regulatorios correspondientes.
+          </p>
+          <p class="text-slate-400">
+            Para salvaguardar la privacidad de los colegas, los números de autorización no son expuestos públicamente en el directorio.
+          </p>
+        </div>
+
+        <!-- ÍTEM 3: PROTECCIÓN DE DATOS Y DERECHOS ARCO -->
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+            🛡️
+          </div>
+          <h3 class="font-bold text-white text-sm">3. Consentimiento y Protección de Datos</h3>
+          <p class="text-slate-400">
+            Los datos compartidos por los profesionales son ingresados de forma totalmente voluntaria. El número telefónico es protegido contra recolección masiva mediante enlaces directos con blindaje anti-scraping.
+          </p>
+          <p class="text-slate-400">
+            Cualquier usuario puede ejercer sus derechos de Acceso, Rectificación o Canceling (Borrado) de su perfil en cualquier momento mediante solicitud directa.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-slate-800/80 text-center text-[11px] text-slate-500">
+        © 2026 FARMAFIND · Red Gratuita de Talento Farmacéutico en El Salvador · Todos los derechos reservados.
+      </div>
+    </div>
+  </section>
 
   <!-- MODAL REGISTRO QF -->
   <div id="modalQF" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4 overflow-y-auto">
@@ -242,7 +325,7 @@
           <label class="flex items-start gap-2 cursor-pointer">
             <input type="checkbox" required class="mt-0.5">
             <span class="text-slate-600 text-[11px] leading-tight">
-              Acepto los Términos y autorizo la publicación voluntaria de mi contacto.
+              Acepto las Políticas de Privacidad y autorizo la publicación de mi contacto profesional.
             </span>
           </label>
         </div>
