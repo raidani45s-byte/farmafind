@@ -41,11 +41,10 @@
 </head>
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
-  <!-- NAVBAR RESTAURADO EXACTO -->
+  <!-- ENCABEZADO / NAVBAR -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-2">
       <div class="flex items-center gap-3">
-        <!-- ISOTIPO FARMAFIND -->
         <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-black text-lg shadow-sm">
           💊
         </div>
@@ -62,7 +61,7 @@
       </nav>
 
       <div class="flex items-center gap-2">
-        <button onclick="alert('Opción para empresas')" class="hidden sm:block border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl transition">
+        <button onclick="openModal('job')" class="hidden sm:block border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl transition">
           + Publicar Plaza Gratis
         </button>
         <button onclick="openModal('qf')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition shadow-md">
@@ -72,11 +71,11 @@
     </div>
   </header>
 
-  <!-- HERO EXACTO CON TARJETA FLOTANTE -->
+  <!-- HERO COMPLETO CON TARJETA DE DESTACADOS Y BUSCADOR -->
   <section class="bg-emerald-hero text-white py-16 px-4 relative overflow-hidden">
     <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center">
       
-      <!-- LADO IZQUIERDO: TITULAR Y BUSCADOR -->
+      <!-- LADO IZQUIERDO -->
       <div class="lg:col-span-7">
         <span class="inline-block text-[11px] font-extrabold tracking-wider text-emerald-300 uppercase mb-4 bg-white/10 px-3 py-1 rounded-full border border-white/10">
           • PLATAFORMA ABIERTA E INDEPENDIENTE · EL SALVADOR
@@ -88,7 +87,7 @@
           Conectamos gratuitamente a Químicos Farmacéuticos con droguerías, farmacias, laboratorios y establecimientos de salud en todo el país.
         </p>
 
-        <!-- BUSCADOR FLOTANTE -->
+        <!-- BUSCADOR -->
         <div class="bg-white p-2 rounded-2xl shadow-xl flex flex-col sm:flex-row gap-2 max-w-2xl">
           <div class="flex-1 flex items-center px-3 border border-slate-100 rounded-xl bg-slate-50">
             <span class="text-slate-400 text-sm mr-2">🔍</span>
@@ -116,7 +115,7 @@
         </div>
       </div>
 
-      <!-- LADO DERECHO: TARJETA PANEL FLOTANTE -->
+      <!-- LADO DERECHO: TARJETA FLOTANTE -->
       <div class="lg:col-span-5">
         <div class="glass-panel rounded-3xl p-6 shadow-2xl relative">
           <div class="flex items-center justify-between mb-4">
@@ -127,7 +126,6 @@
             <span class="bg-emerald-500/30 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-400/30">DISPONIBLE</span>
           </div>
 
-          <!-- LISTA DESTACADA DEMO -->
           <div class="space-y-3">
             <div class="glass-card p-3 rounded-2xl flex items-center justify-between gap-3">
               <div class="flex items-center gap-3">
@@ -165,7 +163,7 @@
     </div>
   </section>
 
-  <!-- DIRECTORIO GENERAL DE PERFILES REALES -->
+  <!-- DIRECTORIO GENERAL DE PERFILES Q.F. -->
   <section id="directorio" class="py-12 px-4 max-w-7xl mx-auto flex-1">
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
       <div>
@@ -177,101 +175,82 @@
       </div>
     </div>
 
-    <!-- TARJETAS REGISTRADAS EN FIREBASE -->
     <div id="qfGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <p id="loadingMsg" class="text-xs text-slate-500 col-span-full text-center py-8">Cargando base de datos...</p>
     </div>
   </section>
 
-  <!-- BOLSA DE TRABAJO -->
+  <!-- BOLSA DE TRABAJO Y VACANTES PUBLICADAS POR PROPIETARIOS -->
   <section id="empleos" class="bg-slate-100 py-12 px-4 border-t border-slate-200">
     <div class="max-w-7xl mx-auto">
-      <div class="mb-8">
-        <h2 class="text-2xl font-black text-slate-900">Bolsa de Regencias y Vacantes</h2>
-        <p class="text-xs text-slate-500">Publicaciones activas de farmacias, droguerías y laboratorios en El Salvador.</p>
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-slate-900">Bolsa de Regencias y Vacantes</h2>
+          <p class="text-xs text-slate-500">Publicaciones activas de farmacias, droguerías y laboratorios en El Salvador.</p>
+        </div>
+        <button onclick="openModal('job')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
+          + Publicar Nueva Plaza Gratis
+        </button>
       </div>
 
-      <div class="space-y-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">URGENTE</span>
-              <h3 class="font-bold text-slate-900 text-sm">Regente Farmacéutico Parcial (Droguería)</h3>
-            </div>
-            <p class="text-xs text-slate-500">Droguería Médica SV · 📍 San Salvador · Cobertura Parcial</p>
-          </div>
-          <button onclick="alert('Ponte en contacto con el empleador vía WhatsApp.')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
-            Postularme Gratis
-          </button>
-        </div>
+      <div id="jobGrid" class="space-y-4">
+        <p id="loadingJobsMsg" class="text-xs text-slate-500 text-center py-4">Cargando vacantes activas...</p>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN MARCO LEGAL & SEGURIDAD DETALLADA -->
-  <section id="legal" class="bg-slate-900 text-slate-300 py-16 px-4 border-t border-slate-800">
+  <!-- MARCO LEGAL Y DERECHOS ARCO -->
+  <section id="legal" class="bg-[#033628] text-slate-200 py-16 px-4 border-t border-emerald-900/50">
     <div class="max-w-7xl mx-auto">
-      <div class="border-b border-slate-800 pb-8 mb-10">
-        <span class="text-emerald-400 font-extrabold text-xs tracking-wider uppercase">Garantías y Cumplimiento Normativo</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Marco Legal & Políticas de Privacidad</h2>
-        <p class="text-slate-400 text-xs mt-2 max-w-3xl">
-          FARMAFIND opera bajo los principios de libre ejercicio profesional, protección de datos y neutralidad como intermediario digital pasivo en El Salvador.
+      <div class="border-b border-emerald-800/60 pb-8 mb-10">
+        <span class="text-emerald-300 font-extrabold text-xs tracking-wider uppercase">Garantías y Cumplimiento Normativo</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Marco Legal & Derechos ARCO de Privacidad</h2>
+        <p class="text-emerald-100/80 text-xs mt-2 max-w-3xl">
+          FARMAFIND opera bajo los principios de libre ejercicio profesional, protección de datos personales y neutralidad como intermediario digital pasivo en El Salvador.
         </p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8 text-xs leading-relaxed">
         
-        <!-- ÍTEM 1: DESLINDE Y INTERMEDIACIÓN PASIVA -->
-        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-700/50 space-y-3 shadow-lg">
+          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
             ⚖️
           </div>
           <h3 class="font-bold text-white text-sm">1. Intermediación Pasiva y Deslinde Legal</h3>
-          <p class="text-slate-400">
+          <p class="text-emerald-100/90">
             FARMAFIND actúa exclusivamente como un medio publicitario y de difusión pasiva para facilitar el contacto entre profesionales independientes y establecimientos de salud en El Salvador.
-          </p>
-          <p class="text-slate-400">
-            La plataforma no constituye agencia de empleo, no participa en contrataciones ni asume responsabilidad por acuerdos comerciales, laborales o de regencia pactados entre las partes.
           </p>
         </div>
 
-        <!-- ÍTEM 2: VERIFICACIÓN DE CREDENCIALES -->
-        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-700/50 space-y-3 shadow-lg">
+          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
             📋
           </div>
           <h3 class="font-bold text-white text-sm">2. Verificación de Atestados y Licencias</h3>
-          <p class="text-slate-400">
-            Es responsabilidad estricta y exclusiva de la empresa contratante (farmacia, droguería o laboratorio) validar los atestados, títulos universitarios y autorizaciones vigentes ante los organismos regulatorios correspondientes.
-          </p>
-          <p class="text-slate-400">
-            Para salvaguardar la privacidad de los colegas, los números de autorización no son expuestos públicamente en el directorio.
+          <p class="text-emerald-100/90">
+            Es responsabilidad estricta y exclusiva de la empresa contratante validar los atestados, títulos universitarios y autorizaciones vigentes ante los organismos regulatorios correspondientes.
           </p>
         </div>
 
-        <!-- ÍTEM 3: PROTECCIÓN DE DATOS Y DERECHOS ARCO -->
-        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-2">
+        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-500/60 space-y-3 shadow-lg">
+          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
             🛡️
           </div>
-          <h3 class="font-bold text-white text-sm">3. Consentimiento y Protección de Datos</h3>
-          <p class="text-slate-400">
-            Los datos compartidos por los profesionales son ingresados de forma totalmente voluntaria. El número telefónico es protegido contra recolección masiva mediante enlaces directos con blindaje anti-scraping.
-          </p>
-          <p class="text-slate-400">
-            Cualquier usuario puede ejercer sus derechos de Acceso, Rectificación o Canceling (Borrado) de su perfil en cualquier momento mediante solicitud directa.
+          <h3 class="font-bold text-white text-sm">3. Protección de Datos & Derechos ARCO</h3>
+          <p class="text-emerald-100/90">
+            Los datos se ingresan voluntariamente. Garantizamos el ejercicio de tus derechos de <strong class="text-white">Acceso, Rectificación, Cancelación (Borrado) u Oposición</strong> en cualquier momento.
           </p>
         </div>
 
       </div>
 
-      <div class="mt-12 pt-8 border-t border-slate-800/80 text-center text-[11px] text-slate-500">
+      <div class="mt-12 pt-8 border-t border-emerald-800/60 text-center text-[11px] text-emerald-200/60">
         © 2026 FARMAFIND · Red Gratuita de Talento Farmacéutico en El Salvador · Todos los derechos reservados.
       </div>
     </div>
   </section>
 
-  <!-- MODAL REGISTRO QF -->
+  <!-- MODAL 1: REGISTRO QF -->
   <div id="modalQF" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative my-8">
       <button onclick="closeModal('qf')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl">✕</button>
@@ -312,7 +291,7 @@
         </div>
 
         <div>
-          <label class="font-bold text-slate-700 block mb-1">Especialidades (separadas por comas)</label>
+          <label class="font-bold text-slate-700 block mb-1">Especialidades (comas)</label>
           <input id="specs" placeholder="Ej. Regencia Droguería, Registros Sanitarios, QA" class="w-full p-3 border border-slate-200 rounded-xl">
         </div>
 
@@ -321,33 +300,87 @@
           <textarea id="bio" rows="3" placeholder="Describe brevemente tus competencias..." class="w-full p-3 border border-slate-200 rounded-xl"></textarea>
         </div>
 
-        <div class="pt-2">
-          <label class="flex items-start gap-2 cursor-pointer">
-            <input type="checkbox" required class="mt-0.5">
-            <span class="text-slate-600 text-[11px] leading-tight">
-              Acepto las Políticas de Privacidad y autorizo la publicación de mi contacto profesional.
-            </span>
-          </label>
-        </div>
-
         <button id="submitBtn" type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
-          Guardar Perfil
+          Guardar Perfil Q.F.
         </button>
       </form>
     </div>
   </div>
 
-  <!-- SCRIPT FIREBASE -->
+  <!-- MODAL 2: PUBLICAR PLAZA / VACANTE (PARA PROPIETARIOS / EMPRESAS) -->
+  <div id="modalJob" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative my-8">
+      <button onclick="closeModal('job')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl">✕</button>
+      <h3 class="text-xl font-bold text-slate-900 mb-1">Publicar Plaza de Trabajo o Regencia</h3>
+      <p class="text-xs text-slate-500 mb-6">Formulario gratuito para Farmacias, Droguerías y Laboratorios.</p>
+
+      <form onsubmit="saveJobToFirebase(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Nombre del Establecimiento / Empresa *</label>
+          <input required id="companyName" placeholder="Ej. Farmacia San José / Droguería Médica" class="w-full p-3 border border-slate-200 rounded-xl">
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Título de la Vacante / Puesto *</label>
+          <input required id="jobTitle" placeholder="Ej. Regente Farmacéutico Cobertura Parcial" class="w-full p-3 border border-slate-200 rounded-xl">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Ubicación / Ciudad *</label>
+            <select id="jobLocation" class="w-full p-3 border border-slate-200 rounded-xl bg-white font-medium">
+              <option>San Salvador</option>
+              <option>Santa Ana</option>
+              <option>San Miguel</option>
+              <option>La Libertad</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Teléfono / WhatsApp *</label>
+            <input required id="jobPhone" placeholder="+503 7000-0000" class="w-full p-3 border border-slate-200 rounded-xl">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Modalidad / Horario *</label>
+          <input required id="jobSchedule" placeholder="Ej. Tiempo Completo, Medio Tiempo, Regencia Parcial" class="w-full p-3 border border-slate-200 rounded-xl">
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Detalles o Requisitos de la Vacante</label>
+          <textarea id="jobDesc" rows="3" placeholder="Requisitos, oferta salarial y detalles..." class="w-full p-3 border border-slate-200 rounded-xl"></textarea>
+        </div>
+
+        <button id="jobSubmitBtn" type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+          Publicar Vacante Gratis
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT FIREBASE LOGIC -->
   <script>
     function openModal(id) {
-      document.getElementById('modalQF').classList.remove('hidden');
-      document.getElementById('modalQF').classList.add('flex');
-    }
-    function closeModal(id) {
-      document.getElementById('modalQF').classList.add('hidden');
-      document.getElementById('modalQF').classList.remove('flex');
+      if(id === 'qf') {
+        document.getElementById('modalQF').classList.remove('hidden');
+        document.getElementById('modalQF').classList.add('flex');
+      } else if(id === 'job') {
+        document.getElementById('modalJob').classList.remove('hidden');
+        document.getElementById('modalJob').classList.add('flex');
+      }
     }
 
+    function closeModal(id) {
+      if(id === 'qf') {
+        document.getElementById('modalQF').classList.add('hidden');
+        document.getElementById('modalQF').classList.remove('flex');
+      } else if(id === 'job') {
+        document.getElementById('modalJob').classList.add('hidden');
+        document.getElementById('modalJob').classList.remove('flex');
+      }
+    }
+
+    // 1. GUARDAR QF EN FIREBASE
     async function saveProfileToFirebase(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -367,21 +400,52 @@
 
       try {
         await window.addDoc(window.collection(window.db, "profesionales"), profileData);
-        alert("¡Tu perfil ha sido registrado con éxito!");
+        alert("¡Tu perfil profesional ha sido publicado exitosamente!");
         closeModal('qf');
         loadProfilesFromFirebase();
       } catch (error) {
-        console.error("Error guardando:", error);
-        alert("Error al guardar en la base de datos.");
+        console.error(error);
+        alert("Error al guardar perfil.");
       } finally {
-        btn.innerText = "Guardar Perfil";
+        btn.innerText = "Guardar Perfil Q.F.";
         btn.disabled = false;
       }
     }
 
+    // 2. GUARDAR VACANTE DE EMPRESA EN FIREBASE
+    async function saveJobToFirebase(e) {
+      e.preventDefault();
+      const btn = document.getElementById('jobSubmitBtn');
+      btn.innerText = "Publicando plaza...";
+      btn.disabled = true;
+
+      const jobData = {
+        companyName: document.getElementById('companyName').value,
+        jobTitle: document.getElementById('jobTitle').value,
+        jobLocation: document.getElementById('jobLocation').value,
+        jobPhone: document.getElementById('jobPhone').value,
+        jobSchedule: document.getElementById('jobSchedule').value,
+        jobDesc: document.getElementById('jobDesc').value,
+        createdAt: new Date()
+      };
+
+      try {
+        await window.addDoc(window.collection(window.db, "vacantes"), jobData);
+        alert("¡La plaza de trabajo ha sido publicada con éxito en la bolsa de empleo!");
+        closeModal('job');
+        loadJobsFromFirebase();
+      } catch (error) {
+        console.error(error);
+        alert("Error al guardar la vacante.");
+      } finally {
+        btn.innerText = "Publicar Vacante Gratis";
+        btn.disabled = false;
+      }
+    }
+
+    // 3. LEER QF DESDE FIREBASE
     async function loadProfilesFromFirebase() {
       const grid = document.getElementById('qfGrid');
-      
       try {
         const q = window.query(window.collection(window.db, "profesionales"), window.orderBy("createdAt", "desc"));
         const querySnapshot = await window.getDocs(q);
@@ -430,9 +494,65 @@
       }
     }
 
+    // 4. LEER VACANTES DESDE FIREBASE
+    async function loadJobsFromFirebase() {
+      const jobGrid = document.getElementById('jobGrid');
+      try {
+        const q = window.query(window.collection(window.db, "vacantes"), window.orderBy("createdAt", "desc"));
+        const querySnapshot = await window.getDocs(q);
+
+        if(querySnapshot.empty) {
+          jobGrid.innerHTML = `
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">DEMO</span>
+                  <h3 class="font-bold text-slate-900 text-sm">Regente Farmacéutico Parcial (Droguería)</h3>
+                </div>
+                <p class="text-xs text-slate-500">Droguería Médica SV · 📍 San Salvador · Cobertura Parcial</p>
+              </div>
+              <button onclick="openModal('job')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
+                + Publicar Tu Vacante
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        jobGrid.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+          const j = doc.data();
+          const item = `
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">ACTIVA</span>
+                  <h3 class="font-bold text-slate-900 text-sm">${j.jobTitle}</h3>
+                </div>
+                <p class="text-xs text-slate-500">${j.companyName} · 📍 ${j.jobLocation} · ${j.jobSchedule}</p>
+                <p class="text-xs text-slate-600 mt-2">${j.jobDesc || ''}</p>
+              </div>
+              <button onclick="contactCompany('${j.jobTitle}', '${j.companyName}', '${j.jobPhone}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shrink-0">
+                Postularme por WhatsApp
+              </button>
+            </div>
+          `;
+          jobGrid.insertAdjacentHTML('beforeend', item);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     function contactProfessional(name, phone) {
       const cleanPhone = phone.replace(/[^0-9]/g, '');
       const msg = encodeURIComponent(`Hola ${name}, encontré tu perfil en FARMAFIND y me gustaría consultar tu disponibilidad.`);
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+    }
+
+    function contactCompany(jobTitle, company, phone) {
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const msg = encodeURIComponent(`Hola ${company}, vi la vacante de "${jobTitle}" publicada en FARMAFIND y me gustaría aplicar.`);
       window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
     }
 
@@ -450,7 +570,10 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(loadProfilesFromFirebase, 1000);
+      setTimeout(() => {
+        loadProfilesFromFirebase();
+        loadJobsFromFirebase();
+      }, 1000);
     });
   </script>
 </body>
