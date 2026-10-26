@@ -1,580 +1,767 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FARMAFIND | Red Gratuita de Talento Farmacéutico y Regencias</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .bg-emerald-hero { background: #044e3a; }
-    .glass-panel { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); }
-    .glass-card { background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); }
-  </style>
-
-  <!-- FIREBASE CONFIG -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCHVLXFsPsFp_z-1wMaDsQF5jeauZHXcos",
-      authDomain: "farmaceuticos-1691e.firebaseapp.com",
-      projectId: "farmaceuticos-1691e",
-      storageBucket: "farmaceuticos-1691e.firebasestorage.app",
-      messagingSenderId: "333258194530",
-      appId: "1:333258194530:web:914a3bf6ca6a3c45ae9b3b",
-      measurementId: "G-F52TV6EN4N"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.db = db;
-    window.addDoc = addDoc;
-    window.collection = collection;
-    window.getDocs = getDocs;
-    window.query = query;
-    window.orderBy = orderBy;
-  </script>
-</head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
-
-  <!-- ENCABEZADO / NAVBAR -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-black text-lg shadow-sm">
-          💊
-        </div>
-        <span class="text-2xl font-black tracking-tight text-slate-900">FARMA<span class="text-emerald-600">FIND</span></span>
-        <span class="hidden sm:inline-block text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full">
-          100% GRATUITO
-        </span>
-      </div>
-
-      <nav class="hidden lg:flex items-center gap-5 text-xs font-bold text-slate-600">
-        <a href="#directorio" class="hover:text-emerald-600 flex items-center gap-1">🔍 Directorio Farmacéutico</a>
-        <a href="#empleos" class="hover:text-emerald-600 flex items-center gap-1">📋 Regencias y Empleos</a>
-        <a href="#legal" class="hover:text-emerald-600 flex items-center gap-1">⚖️ Sobre la Red</a>
-      </nav>
-
-      <div class="flex items-center gap-2">
-        <button onclick="openModal('job')" class="hidden sm:block border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl transition">
-          + Publicar Plaza Gratis
-        </button>
-        <button onclick="openModal('qf')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition shadow-md">
-          Crear Perfil Q.F.
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO COMPLETO CON TARJETA DE DESTACADOS Y BUSCADOR -->
-  <section class="bg-emerald-hero text-white py-16 px-4 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center">
-      
-      <!-- LADO IZQUIERDO -->
-      <div class="lg:col-span-7">
-        <span class="inline-block text-[11px] font-extrabold tracking-wider text-emerald-300 uppercase mb-4 bg-white/10 px-3 py-1 rounded-full border border-white/10">
-          • PLATAFORMA ABIERTA E INDEPENDIENTE · EL SALVADOR
-        </span>
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-          Encuentra Regentes Farmacéuticos y Consultores Especializados.
-        </h1>
-        <p class="text-sm sm:text-base text-emerald-100/90 mb-8 max-w-xl font-normal">
-          Conectamos gratuitamente a Químicos Farmacéuticos con droguerías, farmacias, laboratorios y establecimientos de salud en todo el país.
-        </p>
-
-        <!-- BUSCADOR -->
-        <div class="bg-white p-2 rounded-2xl shadow-xl flex flex-col sm:flex-row gap-2 max-w-2xl">
-          <div class="flex-1 flex items-center px-3 border border-slate-100 rounded-xl bg-slate-50">
-            <span class="text-slate-400 text-sm mr-2">🔍</span>
-            <input id="searchInput" type="text" placeholder="Especialidad (ej. Regente, SRS)" class="w-full bg-transparent py-2.5 text-xs text-slate-800 focus:outline-none font-medium">
-          </div>
-          <div class="flex items-center px-3 border border-slate-100 rounded-xl bg-slate-50">
-            <span class="text-slate-400 text-sm mr-2">📍</span>
-            <select id="cityFilter" class="bg-transparent py-2.5 text-xs text-slate-700 focus:outline-none font-medium">
-              <option value="">Todas las zonas</option>
-              <option>San Salvador</option>
-              <option>Santa Ana</option>
-              <option>San Miguel</option>
-              <option>La Libertad</option>
-            </select>
-          </div>
-          <button onclick="searchDirectory()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl transition text-xs">
-            Buscar
-          </button>
-        </div>
-
-        <div class="flex flex-wrap gap-4 mt-6 text-[11px] text-emerald-200/80 font-semibold">
-          <span>✓ Contacto Directo WhatsApp</span>
-          <span>✓ Sin Cobro de Comisiones</span>
-          <span>✓ Protección Anti-Scraping</span>
-        </div>
-      </div>
-
-      <!-- LADO DERECHO: TARJETA FLOTANTE -->
-      <div class="lg:col-span-5">
-        <div class="glass-panel rounded-3xl p-6 shadow-2xl relative">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="font-bold text-white text-base">Regentes & Consultores Destacados</h3>
-              <p class="text-[11px] text-emerald-200">Perfiles disponibles para contratación</p>
-            </div>
-            <span class="bg-emerald-500/30 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-400/30">DISPONIBLE</span>
-          </div>
-
-          <div class="space-y-3">
-            <div class="glass-card p-3 rounded-2xl flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center text-xs">
-                  SR
-                </div>
-                <div>
-                  <h4 class="font-bold text-white text-xs">Licda. Sofía Rivas</h4>
-                  <p class="text-[10px] text-emerald-200">Regente Farmacéutico · San Salvador</p>
-                </div>
-              </div>
-              <span class="text-[10px] bg-white/10 px-2 py-1 rounded-lg text-emerald-100 font-bold">12 años exp.</span>
-            </div>
-
-            <div class="glass-card p-3 rounded-2xl flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-teal-500 text-white font-bold rounded-xl flex items-center justify-center text-xs">
-                  RA
-                </div>
-                <div>
-                  <h4 class="font-bold text-white text-xs">Lic. Roberto Alemán</h4>
-                  <p class="text-[10px] text-emerald-200">Aseguramiento Calidad (QA) · La Libertad</p>
-                </div>
-              </div>
-              <span class="text-[10px] bg-white/10 px-2 py-1 rounded-lg text-emerald-100 font-bold">9 años exp.</span>
-            </div>
-          </div>
-
-          <button onclick="openModal('qf')" class="w-full mt-4 text-center text-xs font-bold text-emerald-300 hover:text-white transition">
-            ¿Eres Químico Farmacéutico? Publica tu perfil gratis aquí →
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- DIRECTORIO GENERAL DE PERFILES Q.F. -->
-  <section id="directorio" class="py-12 px-4 max-w-7xl mx-auto flex-1">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-      <div>
-        <h2 class="text-2xl font-black text-slate-900">Directorio Profesional Q.F.</h2>
-        <p class="text-xs text-slate-500">Perfiles en tiempo real registrados desde la base de datos.</p>
-      </div>
-      <div class="bg-emerald-50 text-emerald-800 text-xs font-semibold px-3 py-2 rounded-lg border border-emerald-200">
-        ℹ️ Verificación de atestados legales a cargo de la entidad contratante.
-      </div>
-    </div>
-
-    <div id="qfGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <p id="loadingMsg" class="text-xs text-slate-500 col-span-full text-center py-8">Cargando base de datos...</p>
-    </div>
-  </section>
-
-  <!-- BOLSA DE TRABAJO Y VACANTES PUBLICADAS POR PROPIETARIOS -->
-  <section id="empleos" class="bg-slate-100 py-12 px-4 border-t border-slate-200">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <div>
-          <h2 class="text-2xl font-black text-slate-900">Bolsa de Regencias y Vacantes</h2>
-          <p class="text-xs text-slate-500">Publicaciones activas de farmacias, droguerías y laboratorios en El Salvador.</p>
-        </div>
-        <button onclick="openModal('job')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
-          + Publicar Nueva Plaza Gratis
-        </button>
-      </div>
-
-      <div id="jobGrid" class="space-y-4">
-        <p id="loadingJobsMsg" class="text-xs text-slate-500 text-center py-4">Cargando vacantes activas...</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- MARCO LEGAL Y DERECHOS ARCO -->
-  <section id="legal" class="bg-[#033628] text-slate-200 py-16 px-4 border-t border-emerald-900/50">
-    <div class="max-w-7xl mx-auto">
-      <div class="border-b border-emerald-800/60 pb-8 mb-10">
-        <span class="text-emerald-300 font-extrabold text-xs tracking-wider uppercase">Garantías y Cumplimiento Normativo</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Marco Legal & Derechos ARCO de Privacidad</h2>
-        <p class="text-emerald-100/80 text-xs mt-2 max-w-3xl">
-          FARMAFIND opera bajo los principios de libre ejercicio profesional, protección de datos personales y neutralidad como intermediario digital pasivo en El Salvador.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8 text-xs leading-relaxed">
-        
-        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-700/50 space-y-3 shadow-lg">
-          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
-            ⚖️
-          </div>
-          <h3 class="font-bold text-white text-sm">1. Intermediación Pasiva y Deslinde Legal</h3>
-          <p class="text-emerald-100/90">
-            FARMAFIND actúa exclusivamente como un medio publicitario y de difusión pasiva para facilitar el contacto entre profesionales independientes y establecimientos de salud en El Salvador.
-          </p>
-        </div>
-
-        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-700/50 space-y-3 shadow-lg">
-          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
-            📋
-          </div>
-          <h3 class="font-bold text-white text-sm">2. Verificación de Atestados y Licencias</h3>
-          <p class="text-emerald-100/90">
-            Es responsabilidad estricta y exclusiva de la empresa contratante validar los atestados, títulos universitarios y autorizaciones vigentes ante los organismos regulatorios correspondientes.
-          </p>
-        </div>
-
-        <div class="bg-[#054a37]/80 p-6 rounded-2xl border border-emerald-500/60 space-y-3 shadow-lg">
-          <div class="w-10 h-10 rounded-xl bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">
-            🛡️
-          </div>
-          <h3 class="font-bold text-white text-sm">3. Protección de Datos & Derechos ARCO</h3>
-          <p class="text-emerald-100/90">
-            Los datos se ingresan voluntariamente. Garantizamos el ejercicio de tus derechos de <strong class="text-white">Acceso, Rectificación, Cancelación (Borrado) u Oposición</strong> en cualquier momento.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="mt-12 pt-8 border-t border-emerald-800/60 text-center text-[11px] text-emerald-200/60">
-        © 2026 FARMAFIND · Red Gratuita de Talento Farmacéutico en El Salvador · Todos los derechos reservados.
-      </div>
-    </div>
-  </section>
-
-  <!-- MODAL 1: REGISTRO QF -->
-  <div id="modalQF" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative my-8">
-      <button onclick="closeModal('qf')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl">✕</button>
-      <h3 class="text-xl font-bold text-slate-900 mb-1">Crear Perfil Profesional Q.F.</h3>
-      <p class="text-xs text-slate-500 mb-6">Completa tus datos profesionales para figurar en la red pública.</p>
-
-      <form onsubmit="saveProfileToFirebase(event)" class="space-y-4 text-xs">
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Nombre *</label>
-            <input required id="firstName" placeholder="Ej. Ana" class="w-full p-3 border border-slate-200 rounded-xl">
-          </div>
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Apellido *</label>
-            <input required id="lastName" placeholder="Ej. Gómez" class="w-full p-3 border border-slate-200 rounded-xl">
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Departamento / Ciudad *</label>
-          <select id="city" class="w-full p-3 border border-slate-200 rounded-xl bg-white font-medium">
-            <option>San Salvador</option>
-            <option>Santa Ana</option>
-            <option>San Miguel</option>
-            <option>La Libertad</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Años de Experiencia *</label>
-            <input required id="exp" placeholder="Ej. 6" class="w-full p-3 border border-slate-200 rounded-xl">
-          </div>
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Teléfono / WhatsApp * <span class="text-[10px] text-emerald-700 font-normal">(Público)</span></label>
-            <input required id="phone" placeholder="+503 7000-0000" class="w-full p-3 border border-slate-200 rounded-xl">
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Especialidades (comas)</label>
-          <input id="specs" placeholder="Ej. Regencia Droguería, Registros Sanitarios, QA" class="w-full p-3 border border-slate-200 rounded-xl">
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Resumen Profesional</label>
-          <textarea id="bio" rows="3" placeholder="Describe brevemente tus competencias..." class="w-full p-3 border border-slate-200 rounded-xl"></textarea>
-        </div>
-
-        <button id="submitBtn" type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
-          Guardar Perfil Q.F.
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL 2: PUBLICAR PLAZA / VACANTE (PARA PROPIETARIOS / EMPRESAS) -->
-  <div id="modalJob" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative my-8">
-      <button onclick="closeModal('job')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl">✕</button>
-      <h3 class="text-xl font-bold text-slate-900 mb-1">Publicar Plaza de Trabajo o Regencia</h3>
-      <p class="text-xs text-slate-500 mb-6">Formulario gratuito para Farmacias, Droguerías y Laboratorios.</p>
-
-      <form onsubmit="saveJobToFirebase(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Nombre del Establecimiento / Empresa *</label>
-          <input required id="companyName" placeholder="Ej. Farmacia San José / Droguería Médica" class="w-full p-3 border border-slate-200 rounded-xl">
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Título de la Vacante / Puesto *</label>
-          <input required id="jobTitle" placeholder="Ej. Regente Farmacéutico Cobertura Parcial" class="w-full p-3 border border-slate-200 rounded-xl">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Ubicación / Ciudad *</label>
-            <select id="jobLocation" class="w-full p-3 border border-slate-200 rounded-xl bg-white font-medium">
-              <option>San Salvador</option>
-              <option>Santa Ana</option>
-              <option>San Miguel</option>
-              <option>La Libertad</option>
-            </select>
-          </div>
-          <div>
-            <label class="font-bold text-slate-700 block mb-1">Teléfono / WhatsApp *</label>
-            <input required id="jobPhone" placeholder="+503 7000-0000" class="w-full p-3 border border-slate-200 rounded-xl">
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Modalidad / Horario *</label>
-          <input required id="jobSchedule" placeholder="Ej. Tiempo Completo, Medio Tiempo, Regencia Parcial" class="w-full p-3 border border-slate-200 rounded-xl">
-        </div>
-
-        <div>
-          <label class="font-bold text-slate-700 block mb-1">Detalles o Requisitos de la Vacante</label>
-          <textarea id="jobDesc" rows="3" placeholder="Requisitos, oferta salarial y detalles..." class="w-full p-3 border border-slate-200 rounded-xl"></textarea>
-        </div>
-
-        <button id="jobSubmitBtn" type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
-          Publicar Vacante Gratis
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- SCRIPT FIREBASE LOGIC -->
-  <script>
-    function openModal(id) {
-      if(id === 'qf') {
-        document.getElementById('modalQF').classList.remove('hidden');
-        document.getElementById('modalQF').classList.add('flex');
-      } else if(id === 'job') {
-        document.getElementById('modalJob').classList.remove('hidden');
-        document.getElementById('modalJob').classList.add('flex');
-      }
-    }
-
-    function closeModal(id) {
-      if(id === 'qf') {
-        document.getElementById('modalQF').classList.add('hidden');
-        document.getElementById('modalQF').classList.remove('flex');
-      } else if(id === 'job') {
-        document.getElementById('modalJob').classList.add('hidden');
-        document.getElementById('modalJob').classList.remove('flex');
-      }
-    }
-
-    // 1. GUARDAR QF EN FIREBASE
-    async function saveProfileToFirebase(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.innerText = "Guardando...";
-      btn.disabled = true;
-
-      const profileData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        city: document.getElementById('city').value,
-        exp: document.getElementById('exp').value,
-        phone: document.getElementById('phone').value,
-        specs: document.getElementById('specs').value,
-        bio: document.getElementById('bio').value,
-        createdAt: new Date()
-      };
-
-      try {
-        await window.addDoc(window.collection(window.db, "profesionales"), profileData);
-        alert("¡Tu perfil profesional ha sido publicado exitosamente!");
-        closeModal('qf');
-        loadProfilesFromFirebase();
-      } catch (error) {
-        console.error(error);
-        alert("Error al guardar perfil.");
-      } finally {
-        btn.innerText = "Guardar Perfil Q.F.";
-        btn.disabled = false;
-      }
-    }
-
-    // 2. GUARDAR VACANTE DE EMPRESA EN FIREBASE
-    async function saveJobToFirebase(e) {
-      e.preventDefault();
-      const btn = document.getElementById('jobSubmitBtn');
-      btn.innerText = "Publicando plaza...";
-      btn.disabled = true;
-
-      const jobData = {
-        companyName: document.getElementById('companyName').value,
-        jobTitle: document.getElementById('jobTitle').value,
-        jobLocation: document.getElementById('jobLocation').value,
-        jobPhone: document.getElementById('jobPhone').value,
-        jobSchedule: document.getElementById('jobSchedule').value,
-        jobDesc: document.getElementById('jobDesc').value,
-        createdAt: new Date()
-      };
-
-      try {
-        await window.addDoc(window.collection(window.db, "vacantes"), jobData);
-        alert("¡La plaza de trabajo ha sido publicada con éxito en la bolsa de empleo!");
-        closeModal('job');
-        loadJobsFromFirebase();
-      } catch (error) {
-        console.error(error);
-        alert("Error al guardar la vacante.");
-      } finally {
-        btn.innerText = "Publicar Vacante Gratis";
-        btn.disabled = false;
-      }
-    }
-
-    // 3. LEER QF DESDE FIREBASE
-    async function loadProfilesFromFirebase() {
-      const grid = document.getElementById('qfGrid');
-      try {
-        const q = window.query(window.collection(window.db, "profesionales"), window.orderBy("createdAt", "desc"));
-        const querySnapshot = await window.getDocs(q);
-        
-        if(querySnapshot.empty) {
-          grid.innerHTML = '<p class="text-xs text-slate-500 col-span-full text-center py-8">Aún no hay perfiles adicionales cargados.</p>';
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URM LATAM - Uso Racional de Medicamentos PWA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0077b6',
+                            700: '#023e8a',
+                            900: '#1d3557'
+                        },
+                        android: '#2a9d8f'
+                    }
+                }
+            }
         }
+    </script>
+    <!-- Dynamic Web App Manifest Data URI -->
+    <script>
+        const manifestData = {
+            "name": "URM LATAM - Uso Racional de Medicamentos",
+            "short_name": "URM LATAM",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#023e8a",
+            "theme_color": "#023e8a",
+            "description": "Portal de Acceso Abierto sobre Uso Racional de Medicamentos, Fuentes Bibliográficas y Centros de Información en LATAM.",
+            "icons": [
+                {
+                    "src": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=192&auto=format&fit=crop&q=80",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=512&auto=format&fit=crop&q=80",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifestData);
+        const manifestBlob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0077b6; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-        grid.innerHTML = '';
-        querySnapshot.forEach((doc) => {
-          const p = doc.data();
-          const initials = ((p.firstName ? p.firstName[0] : 'Q') + (p.lastName ? p.lastName[0] : 'F')).toUpperCase();
-          const specsArray = p.specs ? p.specs.split(',') : [];
+    <!-- Top Announcement Bar -->
+    <div class="bg-brand-900 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
+        <span class="bg-emerald-500 text-slate-900 px-2 py-0.5 rounded-full font-bold uppercase text-[10px]">Open Access</span>
+        <span>Plataforma científica, académica e informativa de divulgación en LATAM.</span>
+    </div>
 
-          const card = `
-            <article class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between mb-3">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl font-bold flex items-center justify-center text-sm">
-                      ${initials}
+    <!-- Hero Header with Laboratory Image Background -->
+    <header class="relative bg-cover bg-center bg-no-repeat text-white py-16 px-4 text-center shadow-lg overflow-hidden" 
+            style="background-image: url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1600');">
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-700/85 to-brand-900/90"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="inline-flex items-center justify-center p-3.5 bg-white/10 rounded-full mb-4 backdrop-blur-md border border-white/20 shadow-inner">
+                <i class="fa-solid fa-pills text-3xl text-sky-200"></i>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3 drop-shadow-md">Uso Racional de Medicamentos (URM) LATAM</h1>
+            <p class="text-sky-100 max-w-2xl mx-auto text-sm sm:text-base opacity-95 drop-shadow">
+                Red de Centros de Información (CIM), Fuentes Bibliográficas, Aplicaciones Android y Herramientas Clínicas Orientativas
+            </p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 overflow-x-auto">
+            <div class="flex whitespace-nowrap space-x-6 py-3 text-sm font-semibold text-slate-600">
+                <a href="#blog" class="hover:text-brand-500 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-newspaper text-brand-500"></i> Blog 2026</a>
+                <a href="#bibliografia" class="hover:text-brand-500 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book-bookmark text-brand-500"></i> Bibliografía</a>
+                <a href="#android" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-brands fa-android text-emerald-500"></i> Apps Android</a>
+                <a href="#directorio" class="hover:text-brand-500 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-hospital-user text-brand-500"></i> Directorio CIMs</a>
+                <a href="#herramientas" class="hover:text-brand-500 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-calculator text-brand-500"></i> Calculadora Renal</a>
+                <a href="#legal" class="hover:text-amber-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced text-amber-500"></i> Marco Legal</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full space-y-12">
+
+        <!-- Universal Real-Time Search Bar -->
+        <section class="max-w-3xl mx-auto">
+            <div class="relative shadow-md rounded-xl">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </div>
+                <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="🔍 Buscar por tema, país (ej. Costa Rica, Colombia, Argentina), app o recurso..." class="w-full pl-11 pr-4 py-3.5 bg-white border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all shadow-sm">
+            </div>
+        </section>
+
+        <!-- PWA Install Banner -->
+        <div id="pwaBanner" class="hidden relative bg-cover bg-center rounded-2xl shadow-md overflow-hidden"
+             style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1200');">
+            <div class="bg-gradient-to-r from-emerald-900/90 to-teal-900/90 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                        <i class="fa-brands fa-android text-2xl text-emerald-200"></i>
                     </div>
                     <div>
-                      <h3 class="font-bold text-slate-900 text-sm">Lic. ${p.firstName} ${p.lastName}</h3>
-                      <span class="text-[11px] font-semibold text-emerald-600">Químico Farmacéutico</span>
+                        <h3 class="font-bold text-base text-white">Instalar App URM LATAM</h3>
+                        <p class="text-xs text-emerald-100">Accede de forma rápida y consulta la información sin necesidad de conexión a Internet.</p>
                     </div>
-                  </div>
-                  <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">Disponible</span>
                 </div>
-                <p class="text-[11px] text-slate-500 mb-2">📍 ${p.city} · ${p.exp} años exp.</p>
-                <div class="flex flex-wrap gap-1 mb-3">
-                  ${specsArray.map(s => `<span class="bg-slate-100 text-slate-600 text-[10px] font-semibold px-2 py-0.5 rounded-md">${s.trim()}</span>`).join('')}
-                </div>
-                <p class="text-xs text-slate-600 line-clamp-2 mb-4">${p.bio || 'Sin descripción.'}</p>
-              </div>
-              <button onclick="contactProfessional('Lic. ${p.firstName} ${p.lastName}', '${p.phone}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 rounded-xl transition">
-                Contactar por WhatsApp
-              </button>
-            </article>
-          `;
-          grid.insertAdjacentHTML('beforeend', card);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    // 4. LEER VACANTES DESDE FIREBASE
-    async function loadJobsFromFirebase() {
-      const jobGrid = document.getElementById('jobGrid');
-      try {
-        const q = window.query(window.collection(window.db, "vacantes"), window.orderBy("createdAt", "desc"));
-        const querySnapshot = await window.getDocs(q);
-
-        if(querySnapshot.empty) {
-          jobGrid.innerHTML = `
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">DEMO</span>
-                  <h3 class="font-bold text-slate-900 text-sm">Regente Farmacéutico Parcial (Droguería)</h3>
-                </div>
-                <p class="text-xs text-slate-500">Droguería Médica SV · 📍 San Salvador · Cobertura Parcial</p>
-              </div>
-              <button onclick="openModal('job')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
-                + Publicar Tu Vacante
-              </button>
+                <button id="installBtn" class="bg-white text-emerald-800 font-bold px-5 py-2.5 rounded-xl shadow hover:bg-emerald-50 transition-all text-xs uppercase tracking-wider whitespace-nowrap">
+                    <i class="fa-solid fa-download mr-1.5"></i> Instalar Ahora
+                </button>
             </div>
-          `;
-          return;
+        </div>
+
+        <!-- Medical Advisory Notice Box -->
+        <section class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl shadow-sm flex items-start gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xl mt-0.5"></i>
+            <div class="text-xs sm:text-sm text-amber-900 leading-relaxed">
+                <span class="font-bold block text-amber-950 mb-0.5">Aviso Médico Orientativo:</span>
+                El contenido de esta Web App es puramente académico, de divulgación científica y de apoyo orientativo. No constituye consejo médico, diagnóstico ni prescripción. Ante cualquier duda clínica o tratamiento, consulte con un médico o profesional farmacéutico colegiado.
+                <button onclick="toggleModal(true)" class="text-brand-700 font-bold underline hover:text-brand-900 ml-1">Ver Descargo Completo</button>.
+            </div>
+        </section>
+
+        <!-- Section: Blog 2026 with Pharmacy Image Background -->
+        <section id="blog" class="relative bg-cover bg-center rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=1600');">
+            <div class="bg-gradient-to-r from-slate-900/95 via-slate-900/90 to-slate-900/95 p-6 sm:p-10 text-white space-y-6">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                    <span class="bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider shadow"><i class="fa-solid fa-pen-nib mr-1"></i> Artículo Editorial • 2026</span>
+                    <span class="text-xs text-slate-300 font-medium"><i class="fa-regular fa-clock mr-1"></i> Actualizado en 2026</span>
+                </div>
+                
+                <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                    La Importancia Vital del Uso Racional de Medicamentos en el Panorama 2026
+                </h2>
+
+                <div class="grid md:grid-cols-3 gap-6 pt-2">
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/10 space-y-2">
+                        <div class="text-sky-300 font-bold text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-shield-virus text-emerald-400"></i> 1. Resistencia Antimicrobiana
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                            En el contexto de 2026, la Resistencia Antimicrobiana (RAM) se consolida como una emergencia sanitaria de prioridad absoluta. Promover tratamientos dirigidos con base en antibiogramas, cumplir las dosis adecuadas y evitar la automedicación son la única vía para conservar la eficacia de los tratamientos esenciales.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/10 space-y-2">
+                        <div class="text-sky-300 font-bold text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-sky-400"></i> 2. Control de Desinformación
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                            El auge del acceso indiscriminado a información en redes sociales exige el fortalecimiento de los Centros de Información de Medicamentos (CIM) como fuentes primarias e independientes, capaces de ofrecer evidencia científica objetiva libre de influencias comerciales.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/10 space-y-2">
+                        <div class="text-sky-300 font-bold text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-user-check text-amber-400"></i> 3. Seguridad del Paciente
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                            Ante una población con mayor esperanza de vida y tasas crecientes de polimedicación, el desarrollo de estrategias de conciliación medicamentosa y farmacovigilancia activa minimiza errores de prescripción y previene reacciones adversas evitables (RAM).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Bibliographic Sources with Library/Research Images -->
+        <section id="bibliografia" class="space-y-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-book-open-reader text-brand-500 text-xl"></i>
+                <h2 class="text-2xl font-bold text-brand-900">Fuentes Bibliográficas Científicas</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- PubMed Card -->
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=800');"
+                     data-search="pubmed medline biblioteca nacional medicina ee.uu literatura primaria investigacion">
+                    <div class="bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded shadow">Fuente Primaria / Secundaria</span>
+                            <h3 class="text-xl font-extrabold text-white mt-3 mb-2">PubMed / MEDLINE</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed mb-4">
+                                Repositorio biomédico abierto administrado por el NCBI / NLM de los EE. UU. Es el principal motor de búsqueda de literatura científica arbitrada internacional.
+                            </p>
+                        </div>
+                        <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white border border-white/30 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-2 shadow">
+                            <span>Consultar PubMed</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BVS Card -->
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800');"
+                     data-search="bvs biblioteca virtual salud bireme ops oms lilacs latinoamerica iberoamerica">
+                    <div class="bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded shadow">Fuente Regional LATAM</span>
+                            <h3 class="text-xl font-extrabold text-white mt-3 mb-2">Biblioteca Virtual en Salud (BVS)</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed mb-4">
+                                Portal liderado por la OPS/BIREME que unifica bases de datos regionales como LILACS e iAHx para el estudio e investigación en español y portugués.
+                            </p>
+                        </div>
+                        <a href="https://bvsalud.org/" target="_blank" rel="noopener noreferrer" class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white border border-white/30 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-2 shadow">
+                            <span>Consultar BVS Salud</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- MedlinePlus Card -->
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800');"
+                     data-search="medlineplus espanol pacientes educacion sanitaria informacion de medicamentos">
+                    <div class="bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded shadow">Educación Sanitaria</span>
+                            <h3 class="text-xl font-extrabold text-white mt-3 mb-2">MedlinePlus en Español</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed mb-4">
+                                Servicio de información con lenguaje adaptado para pacientes y profesionales. Excelente recurso para pautas de autocuidado y educación sobre tratamientos.
+                            </p>
+                        </div>
+                        <a href="https://medlineplus.gov/spanish/" target="_blank" rel="noopener noreferrer" class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white border border-white/30 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-all flex items-center justify-center gap-2 shadow">
+                            <span>Consultar MedlinePlus</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Android Apps Recommended -->
+        <section id="android" class="space-y-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-brands fa-android text-emerald-600 text-2xl"></i>
+                <h2 class="text-2xl font-bold text-brand-900">Herramientas & Aplicaciones Android Recomendadas</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800');"
+                     data-search="medscape android google play vademecum interacciones calculadoras clinicas">
+                    <div class="bg-gradient-to-b from-slate-950/90 via-slate-950/85 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded uppercase shadow">Android App</span>
+                                <i class="fa-brands fa-google-play text-slate-400"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">Medscape Android</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Referencia médica completa que incluye vademécum interactivo, verificador de interacciones medicamentosas y noticias médicas actualizadas.
+                            </p>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.medscape.android" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-colors flex items-center justify-center gap-2 shadow">
+                            <i class="fa-brands fa-google-play"></i> Google Play
+                        </a>
+                    </div>
+                </div>
+
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&q=80&w=800');"
+                     data-search="epocrates android google play dosificacion farmacos interacciones identificacion">
+                    <div class="bg-gradient-to-b from-slate-950/90 via-slate-950/85 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded uppercase shadow">Android App</span>
+                                <i class="fa-brands fa-google-play text-slate-400"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">Epocrates Android</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Herramienta de dosificación de medicamentos en el punto de atención, identificador de comprimidos y revisión rápida de interacciones.
+                            </p>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.epocrates" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-colors flex items-center justify-center gap-2 shadow">
+                            <i class="fa-brands fa-google-play"></i> Google Play
+                        </a>
+                    </div>
+                </div>
+
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                     style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800');"
+                     data-search="mdcalc android google play calculadoras medicas renal pediatria cockcroft gault">
+                    <div class="bg-gradient-to-b from-slate-950/90 via-slate-950/85 to-slate-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded uppercase shadow">Android App</span>
+                                <i class="fa-brands fa-google-play text-slate-400"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">MDCalc Medical Calculator</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Colección esencial de calculadoras clínicas validadas, incluyendo función renal, ajustes de antibióticos y escalas de estratificación.
+                            </p>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.mdcalc.app" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-colors flex items-center justify-center gap-2 shadow">
+                            <i class="fa-brands fa-google-play"></i> Google Play
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Directory of CIMs & Social Media -->
+        <section id="directorio" class="space-y-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-sitemap text-brand-500 text-xl"></i>
+                <h2 class="text-2xl font-bold text-brand-900">Centros de Información de Medicamentos (CIM) & Redes Sociales</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- Featured: Director CIMES -->
+                <div class="searchable-card relative bg-cover bg-center rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between border-2 border-blue-500/40"
+                     style="background-image: url('https://images.unsplash.com/photo-1629880100404-983196929e7d?auto=format&fit=crop&q=80&w=800');"
+                     data-search="director cimes facebook informacion de medicamentos farmacia clinica redes sociales">
+                    <div class="bg-gradient-to-b from-blue-950/90 via-slate-900/85 to-blue-950/95 p-6 flex-grow flex flex-col justify-between text-white">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase shadow"><i class="fa-brands fa-facebook"></i> Facebook Oficial</span>
+                                <i class="fa-solid fa-star text-amber-400"></i>
+                            </div>
+                            <h3 class="text-xl font-extrabold text-white mb-2">Director CIMES</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed mb-4">
+                                Página de referencia con publicaciones sobre uso racional de medicamentos, alertas de farmacovigilancia y notas de orientación para profesionales.
+                            </p>
+                        </div>
+                        <a href="https://www.facebook.com/directorcimes" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs text-center transition-colors flex items-center justify-center gap-2 shadow">
+                            <i class="fa-brands fa-facebook"></i> Seguir en Facebook
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Costa Rica: INIFAR / CIMED -->
+                <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" data-search="costa rica cimed inifar ucr universidad de costa rica facebook twitter x boletines">
+                    <div>
+                        <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded">Costa Rica</span>
+                        <h3 class="text-lg font-bold text-brand-900 mt-3 mb-2">CIMED - Univ. de Costa Rica</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Centro referente por la elaboración de infografías didácticas e información evaluativa de medicamentos independiente.
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://facebook.com/INIFARUCR" target="_blank" rel="noopener noreferrer" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-brands fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://x.com/UCRoficial" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-900 hover:bg-black text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-brands fa-x-twitter"></i> X
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colombia: CIMUN -->
+                <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" data-search="colombia cimun universidad nacional bogota facebook twitter x farmacovigilancia">
+                    <div>
+                        <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded">Colombia</span>
+                        <h3 class="text-lg font-bold text-brand-900 mt-3 mb-2">CIMUN - Univ. Nacional</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Líder en estudios de utilización de medicamentos, soporte farmacoterapéutico y monitoreo de alertas farmacológicas.
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://facebook.com/UNALOficial" target="_blank" rel="noopener noreferrer" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-brands fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://x.com/UNALOficial" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-900 hover:bg-black text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-brands fa-x-twitter"></i> X
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Argentina: CIME UNC -->
+                <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" data-search="argentina cime cordoba unc universidad nacional facebook web boletines">
+                    <div>
+                        <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded">Argentina</span>
+                        <h3 class="text-lg font-bold text-brand-900 mt-3 mb-2">CIME - Univ. Nacional de Córdoba</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Evaluación objetiva de la evidencia farmacológica y producción periódica de boletines de investigación de alta calidad.
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://facebook.com/cimeunc" target="_blank" rel="noopener noreferrer" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-brands fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://cime.fcq.unc.edu.ar" target="_blank" rel="noopener noreferrer" class="flex-1 bg-brand-500 hover:bg-brand-700 text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors">
+                            <i class="fa-solid fa-globe"></i> Web
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Regional: Red CIMLAC -->
+                <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" data-search="red cimlac ops oms latinoamerica caribe centros informacion">
+                    <div>
+                        <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded">Red Regional</span>
+                        <h3 class="text-lg font-bold text-brand-900 mt-3 mb-2">Red CIMLAC (OPS)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Red auspiciada por la OPS que articula los Centros de Información de Medicamentos de América Latina y el Caribe.
+                        </p>
+                    </div>
+                    <a href="https://cime.fcq.unc.edu.ar/red-latinoamericana-de-centros-de-informacion-sobre-medicamentos/" target="_blank" rel="noopener noreferrer" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-network-wired"></i> Sitio Oficial
+                    </a>
+                </div>
+
+                <!-- ISDB -->
+                <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" data-search="isdb boletines independientes medicina evidencia mundial twitter x">
+                    <div>
+                        <span class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded">Internacional</span>
+                        <h3 class="text-lg font-bold text-brand-900 mt-3 mb-2">ISDB (Boletines Independientes)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Sociedad Internacional de Boletines de Medicamentos dedicada a promover la divulgación sin conflictos de interés comercial.
+                        </p>
+                    </div>
+                    <a href="https://x.com/ISDB_health" target="_blank" rel="noopener noreferrer" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-2 px-3 rounded-lg text-xs text-center transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fa-brands fa-x-twitter"></i> Seguir en X
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section: Interactive Clinical Calculator with Medical Image Background -->
+        <section id="herramientas" class="relative bg-cover bg-center rounded-2xl shadow-md border border-slate-200 overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1600');">
+            <div class="bg-gradient-to-r from-slate-900/95 via-brand-900/90 to-slate-900/95 p-6 sm:p-8 text-white">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-calculator text-sky-400 text-xl"></i>
+                    <h2 class="text-2xl font-bold text-white">Calculadora Clínica de Aclaramiento de Creatinina</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-300 mb-6">
+                    Fórmula de Cockcroft-Gault de apoyo orientativo para estimar la función renal. <strong>Debe ser verificada clínicamente antes de ajustar dosificaciones.</strong>
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="space-y-4 bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/10">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-200 mb-1">Edad (años):</label>
+                                <input type="number" id="calcAge" placeholder="Ej: 65" class="w-full p-2.5 bg-slate-900/80 border border-slate-700 text-white rounded-lg text-sm focus:ring-2 focus:ring-sky-400 focus:outline-none placeholder-slate-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-200 mb-1">Peso (kg):</label>
+                                <input type="number" id="calcWeight" placeholder="Ej: 70" class="w-full p-2.5 bg-slate-900/80 border border-slate-700 text-white rounded-lg text-sm focus:ring-2 focus:ring-sky-400 focus:outline-none placeholder-slate-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-200 mb-1">Creatinina (mg/dL):</label>
+                                <input type="number" step="0.1" id="calcCr" placeholder="Ej: 1.2" class="w-full p-2.5 bg-slate-900/80 border border-slate-700 text-white rounded-lg text-sm focus:ring-2 focus:ring-sky-400 focus:outline-none placeholder-slate-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-200 mb-1">Género:</label>
+                                <select id="calcGender" class="w-full p-2.5 bg-slate-900/80 border border-slate-700 text-white rounded-lg text-sm focus:ring-2 focus:ring-sky-400 focus:outline-none">
+                                    <option value="1">Masculino</option>
+                                    <option value="0.85">Femenino</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="calculateCrCl()" class="w-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold py-3 px-4 rounded-xl text-sm transition-colors shadow-lg">
+                            Calcular Aclaramiento
+                        </button>
+                    </div>
+
+                    <div id="resultCard" class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/10 text-center flex flex-col items-center justify-center min-h-[220px]">
+                        <i class="fa-solid fa-flask text-3xl text-sky-300 mb-2"></i>
+                        <p class="text-sm text-slate-300 font-medium">Ingresa los parámetros del paciente para obtener el cálculo estimado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Full Legal & Medical Disclaimer Section -->
+        <section id="legal" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <i class="fa-solid fa-scale-balanced text-amber-500 text-2xl"></i>
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-900">Exención de Responsabilidad Médica y Términos Legales</h2>
+                    <p class="text-xs text-slate-500">Política de Transparencia, Neutralidad e Independencia Editorial</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-user-md text-brand-500"></i> Carácter Informativo y No Prescriptivo
+                    </h3>
+                    <p>
+                        Esta aplicación web PWA ha sido desarrollada exclusivamente con fines de <strong>divulgación científica, académica, pedagógica e informativa</strong> sobre el Uso Racional de Medicamentos en América Latina. Bajo ninguna circunstancia reemplaza o sustituye la relación médico-paciente, el diagnóstico formal ni el consejo farmacéutico individualizado.
+                    </p>
+                </div>
+
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-square-root-variable text-brand-500"></i> Uso Orientativo de Herramientas
+                    </h3>
+                    <p>
+                        La calculadora de aclaramiento de creatinina (fórmula de Cockcroft-Gault) es un módulo algorítmico automatizado de <strong>carácter orientativo de apoyo a la docencia o consulta rápida</strong>. Los resultados obtenidos deben ser rigurosamente corroborados por un profesional sanitario cualificado antes de efectuar cualquier modificación de dosis o tomar decisiones clínico-terapéuticas.
+                    </p>
+                </div>
+
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-handshake-slash text-brand-500"></i> Independencia e Imparcialidad
+                    </h3>
+                    <p>
+                        Este portal mantiene <strong>independencia ideológica, comercial y financiera estricta frente a la industria farmacéutica</strong> o entes comerciales con interés en la promoción de insumos médicos. Los enlaces a repositorios oficiales (PubMed, BVS, MedlinePlus) y perfiles públicos de redes sociales (Director CIMES, CIMED, CIMUN, CIME) se proporcionan únicamente por su valor informativo y relevancia académica.
+                    </p>
+                </div>
+
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-shield-cat text-brand-500"></i> Limitación de Responsabilidad
+                    </h3>
+                    <p>
+                        Los creadores, desarrolladores y colaboradores de URM LATAM no asumen responsabilidad alguna por perjuicios, reacciones adversas, omisiones o decisiones clínicas derivadas de la interpretación o uso de la información e indicadores publicados en esta plataforma.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center pt-2">
+                <button onclick="toggleModal(true)" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-black text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-colors shadow">
+                    <i class="fa-solid fa-file-contract"></i> Abrir Términos Legales en Pantalla Completa
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal for Legal & Medical Disclaimer -->
+    <div id="legalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+            <div class="p-5 bg-brand-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-scale-balanced text-amber-400 text-xl"></i>
+                    <h3 class="font-bold text-lg">Aviso Legal y Descargo de Responsabilidad Médica</h3>
+                </div>
+                <button onclick="toggleModal(false)" class="text-slate-300 hover:text-white text-xl p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-950 font-medium">
+                    Por favor, lea detenidamente esta exención de responsabilidad antes de utilizar las herramientas y consultar la información de este portal.
+                </div>
+
+                <h4 class="font-bold text-slate-900 text-base">1. Ausencia de Asesoramiento Médico Profesional</h4>
+                <p>
+                    La información provista en URM LATAM no constituye diagnóstico ni tratamiento médico individualizado. Se aconseja a los usuarios no profesionales de la salud consultar siempre a su profesional médico o farmacéutico tratante antes de iniciar, modificar o suspender cualquier fármaco.
+                </p>
+
+                <h4 class="font-bold text-slate-900 text-base">2. Uso de Calculadoras y Algoritmos Clínicos</h4>
+                <p>
+                    Las herramientas de cálculo (incluida la fórmula de Cockcroft-Gault para función renal) son algoritmos de apoyo pedagógico. Los profesionales de la salud que utilicen dichos cálculos asumen la responsabilidad técnica de verificar la exactitud de los datos y de contextualizar los resultados según el estado fisiopatológico individual del paciente.
+                </p>
+
+                <h4 class="font-bold text-slate-900 text-base">3. Independencia Comercial y Ausencia de Publicidad</h4>
+                <p>
+                    URM LATAM no recibe financiamiento ni patrocinios directos de laboratorios farmacéuticos. No existe conflicto de intereses comercial en la inclusión de directorios, aplicaciones o fuentes bibliográficas.
+                </p>
+
+                <h4 class="font-bold text-slate-900 text-base">4. Enlaces a Sitios de Terceros</h4>
+                <p>
+                    Los hipervínculos hacia plataformas externas (PubMed, BVS, Facebook, X, Google Play) se facilitan para conveniencia del usuario. URM LATAM no ejerce control sobre los contenidos de dichos portales de terceros ni sobre sus actualizaciones sanitarias.
+                </p>
+            </div>
+
+            <div class="p-4 bg-slate-100 border-t border-slate-200 text-right">
+                <button onclick="toggleModal(false)" class="bg-brand-700 hover:bg-brand-900 text-white font-bold px-5 py-2 rounded-xl text-xs transition-colors">
+                    Entendido y Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-slate-300 py-8 px-4 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-6xl mx-auto space-y-3">
+            <div class="flex justify-center items-center gap-2 text-white font-bold text-base">
+                <i class="fa-solid fa-heart-pulse text-emerald-400"></i>
+                <span>Portal Abierto de Uso Racional de Medicamentos (URM LATAM)</span>
+            </div>
+            <p class="max-w-2xl mx-auto text-slate-400">
+                Iniciativa académica e informativa independiente. La información contenida en esta plataforma PWA está destinada a profesionales de la salud e investigadores con fines educativos y de consulta orientativa.
+            </p>
+            <div class="flex justify-center items-center gap-4 text-xs font-semibold pt-1">
+                <button onclick="toggleModal(true)" class="text-sky-300 hover:text-white underline">Aviso Médico & Legal</button>
+                <span>•</span>
+                <a href="#legal" class="text-sky-300 hover:text-white underline">Términos de Uso</a>
+                <span>•</span>
+                <a href="#bibliografia" class="text-sky-300 hover:text-white underline">Fuentes Bibliográficas</a>
+            </div>
+            <div class="text-slate-500 pt-2">
+                © 2026 URM LATAM. Acceso Abierto 100% Gratuito y Sin Fines de Lucro.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Worker Script Registration & PWA Installation Logic -->
+    <script>
+        // 1. Dynamic Inline Service Worker Code using Blob
+        const swCode = `
+            const CACHE_NAME = 'urm-latam-v3';
+            const ASSETS_TO_CACHE = [
+                './',
+                'https://cdn.tailwindcss.com',
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+            ];
+
+            self.addEventListener('install', (event) => {
+                event.waitUntil(
+                    caches.open(CACHE_NAME).then((cache) => {
+                        return cache.addAll(ASSETS_TO_CACHE);
+                    })
+                );
+            });
+
+            self.addEventListener('fetch', (event) => {
+                event.respondWith(
+                    caches.match(event.request).then((cachedResponse) => {
+                        if (cachedResponse) {
+                            return cachedResponse;
+                        }
+                        return fetch(event.request).catch(() => {
+                            return caches.match('./');
+                        });
+                    })
+                );
+            });
+        `;
+
+        const blobSW = new Blob([swCode], {type: 'application/javascript'});
+        const swURL = URL.createObjectURL(blobSW);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(swURL)
+                    .then(reg => console.log('PWA Service Worker registrado con éxito:', reg))
+                    .catch(err => console.log('Error registrando Service Worker:', err));
+            });
         }
 
-        jobGrid.innerHTML = '';
-        querySnapshot.forEach((doc) => {
-          const j = doc.data();
-          const item = `
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">ACTIVA</span>
-                  <h3 class="font-bold text-slate-900 text-sm">${j.jobTitle}</h3>
-                </div>
-                <p class="text-xs text-slate-500">${j.companyName} · 📍 ${j.jobLocation} · ${j.jobSchedule}</p>
-                <p class="text-xs text-slate-600 mt-2">${j.jobDesc || ''}</p>
-              </div>
-              <button onclick="contactCompany('${j.jobTitle}', '${j.companyName}', '${j.jobPhone}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shrink-0">
-                Postularme por WhatsApp
-              </button>
-            </div>
-          `;
-          jobGrid.insertAdjacentHTML('beforeend', item);
+        // 2. PWA Install Event Handler
+        let deferredPrompt;
+        const pwaBanner = document.getElementById('pwaBanner');
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (pwaBanner) pwaBanner.classList.remove('hidden');
         });
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    function contactProfessional(name, phone) {
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const msg = encodeURIComponent(`Hola ${name}, encontré tu perfil en FARMAFIND y me gustaría consultar tu disponibilidad.`);
-      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
-    }
+        if (installBtn) {
+            installBtn.addEventListener('click', () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('El usuario aceptó la instalación PWA');
+                        }
+                        deferredPrompt = null;
+                        pwaBanner.classList.add('hidden');
+                    });
+                }
+            });
+        }
 
-    function contactCompany(jobTitle, company, phone) {
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const msg = encodeURIComponent(`Hola ${company}, vi la vacante de "${jobTitle}" publicada en FARMAFIND y me gustaría aplicar.`);
-      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
-    }
+        // 3. Modal Legal Toggle Function
+        function toggleModal(show) {
+            const modal = document.getElementById('legalModal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
 
-    function searchDirectory() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const city = document.getElementById('cityFilter').value.toLowerCase();
-      const cards = document.querySelectorAll('#qfGrid article');
+        // 4. Real-Time Search Filter
+        function filterCards() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.searchable-card');
 
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        const matchesQ = !q || text.includes(q);
-        const matchesCity = !city || text.includes(city);
-        card.style.display = matchesQ && matchesCity ? 'flex' : 'none';
-      });
-    }
+            cards.forEach(card => {
+                const searchableText = card.getAttribute('data-search') || card.innerText.toLowerCase();
+                if (searchableText.toLowerCase().includes(input)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        loadProfilesFromFirebase();
-        loadJobsFromFirebase();
-      }, 1000);
-    });
-  </script>
+        // 5. Clinical Cockcroft-Gault Calculator Logic
+        function calculateCrCl() {
+            const age = parseFloat(document.getElementById('calcAge').value);
+            const weight = parseFloat(document.getElementById('calcWeight').value);
+            const cr = parseFloat(document.getElementById('calcCr').value);
+            const gender = parseFloat(document.getElementById('calcGender').value);
+            const resultCard = document.getElementById('resultCard');
+
+            if (!age || !weight || !cr) {
+                resultCard.innerHTML = `
+                    <div class="text-amber-400 font-bold text-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-lg mb-1 block"></i>
+                        Por favor completa todos los campos del formulario.
+                    </div>
+                `;
+                return;
+            }
+
+            let crcl = ((140 - age) * weight * gender) / (72 * cr);
+            crcl = crcl.toFixed(1);
+
+            let statusText = "";
+            let badgeClass = "";
+
+            if (crcl < 30) {
+                statusText = "Insuficiencia renal severa. Requiere verificación para ajuste de dosis de medicamentos de eliminación renal.";
+                badgeClass = "bg-rose-900/80 text-rose-200 border-rose-700";
+            } else if (crcl < 60) {
+                statusText = "Insuficiencia renal moderada. Evaluar ajuste de dosificación según ficha técnica verificada.";
+                badgeClass = "bg-amber-900/80 text-amber-200 border-amber-700";
+            } else {
+                statusText = "Función renal conservada o reducción leve.";
+                badgeClass = "bg-emerald-900/80 text-emerald-200 border-emerald-700";
+            }
+
+            resultCard.innerHTML = `
+                <div class="w-full text-center space-y-3">
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Aclaramiento Estimado (Orientativo)</span>
+                    <div class="text-4xl font-extrabold text-white">${crcl} <span class="text-base font-normal text-slate-300">mL/min</span></div>
+                    <div class="p-3 rounded-lg border text-xs font-medium ${badgeClass}">
+                        ${statusText}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
