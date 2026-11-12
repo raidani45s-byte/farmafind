@@ -63,13 +63,27 @@
     import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyCHVLXFsPsFp_z-1wMaDsQF5jeauZHXcos",
-      authDomain: "farmaceuticos-1691e.firebaseapp.com",
-      projectId: "farmaceuticos-1691e",
-      storageBucket: "farmaceuticos-1691e.firebasestorage.app",
-      messagingSenderId: "333258194530",
-      appId: "1:333258194530:web:914a3bf6ca6a3c45ae9b3b",
-      measurementId: "G-F52TV6EN4N"
+     // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBz8bvetaErv-3i7n8W0jl45ASVKw8fcEk",
+  authDomain: "farmafindnov.firebaseapp.com",
+  projectId: "farmafindnov",
+  storageBucket: "farmafindnov.firebasestorage.app",
+  messagingSenderId: "636989912164",
+  appId: "1:636989912164:web:730541791b4a4e1ccd9b71",
+  measurementId: "G-6046H5BTMJ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
     };
 
     const app = initializeApp(firebaseConfig);
